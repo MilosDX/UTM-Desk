@@ -25,11 +25,25 @@ public sealed record IncidenciaResponse(
     DateTime FechaActualizacion,
     DateTime? FechaResolucion)
 {
-    public static IncidenciaResponse FromModel(Incidencia incidencia)
+    public static IncidenciaResponse FromModel(
+        Incidencia incidencia,
+        bool incluirRegistrosInternos = false)
     {
         var detalleJson = incidencia.DetalleEspecifico.ToJson(
             new JsonWriterSettings { OutputMode = JsonOutputMode.RelaxedExtendedJson });
         var detalle = JsonDocument.Parse(detalleJson).RootElement.Clone();
+
+        var historial = incluirRegistrosInternos
+            ? incidencia.HistorialSeguimiento
+            : incidencia.HistorialSeguimiento
+                .Where(entrada => entrada.Visibilidad != "interna")
+                .ToList();
+
+        var evidencias = incluirRegistrosInternos
+            ? incidencia.EvidenciasAdjuntas
+            : incidencia.EvidenciasAdjuntas
+                .Where(evidencia => evidencia.Visibilidad != "interna")
+                .ToList();
 
         return new IncidenciaResponse(
             incidencia.Id,
@@ -44,8 +58,8 @@ public sealed record IncidenciaResponse(
             detalle,
             incidencia.TecnicoAsignado,
             incidencia.Tags,
-            incidencia.HistorialSeguimiento,
-            incidencia.EvidenciasAdjuntas,
+            historial,
+            evidencias,
             incidencia.HorasInvertidas,
             incidencia.FechaCreacion,
             incidencia.FechaActualizacion,

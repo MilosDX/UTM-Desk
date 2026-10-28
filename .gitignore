@@ -3,5 +3,6 @@ obj/
 .vs/
 .vscode/
 appsettings.Local.json
+.keys/
 *.user
 *.suo

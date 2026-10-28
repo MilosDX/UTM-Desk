@@ -113,6 +113,10 @@ public sealed class EntradaHistorial
     [BsonIgnoreIfNull]
     public string? EstadoNuevo { get; set; }
 
+    [BsonElement("estado_anterior")]
+    [BsonIgnoreIfNull]
+    public string? EstadoAnterior { get; set; }
+
     [BsonElement("comentario")]
     [BsonIgnoreIfNull]
     public string? Comentario { get; set; }
@@ -120,6 +124,13 @@ public sealed class EntradaHistorial
     [BsonElement("usuario_id")]
     [BsonRepresentation(BsonType.ObjectId)]
     public string? UsuarioId { get; set; }
+
+    [BsonElement("nombre_usuario")]
+    [BsonIgnoreIfNull]
+    public string? NombreUsuario { get; set; }
+
+    [BsonElement("visibilidad")]
+    public string Visibilidad { get; set; } = "publica";
 
     [BsonElement("horas_trabajadas")]
     [BsonIgnoreIfNull]
@@ -144,6 +155,21 @@ public sealed class EvidenciaAdjunta
 
     [BsonElement("ruta_storage")]
     public string RutaStorage { get; set; } = string.Empty;
+
+    [BsonElement("descripcion")]
+    [BsonIgnoreIfNull]
+    public string? Descripcion { get; set; }
+
+    [BsonElement("usuario_id")]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string? UsuarioId { get; set; }
+
+    [BsonElement("nombre_usuario")]
+    [BsonIgnoreIfNull]
+    public string? NombreUsuario { get; set; }
+
+    [BsonElement("visibilidad")]
+    public string Visibilidad { get; set; } = "publica";
 
     [BsonElement("fecha_carga")]
     [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]

@@ -1,6 +1,0 @@
-@UTMDesk.Api_HostAddress = http://localhost:5254
-
-GET {{UTMDesk.Api_HostAddress}}/api/incidencias
-Accept: application/json
-
-###

@@ -1,0 +1,137 @@
+{
+  "info": {
+    "name": "UTM Desk API",
+    "description": "Colección del backend UTM Desk. Ejecuta primero Auth / Login; el token se guarda automáticamente.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5254" },
+    { "key": "adminEmail", "value": "admin@utmdesk.local" },
+    { "key": "adminPassword", "value": "" },
+    { "key": "token", "value": "" },
+    { "key": "incidenciaId", "value": "" },
+    { "key": "tecnicoId", "value": "" },
+    { "key": "usuarioId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Sistema",
+      "item": [
+        {
+          "name": "Health",
+          "request": { "auth": { "type": "noauth" }, "method": "GET", "url": "{{baseUrl}}/health" }
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "pm.test('Login correcto', () => pm.response.to.have.status(200));",
+              "if (pm.response.code === 200) pm.collectionVariables.set('token', pm.response.json().token);"
+            ] }
+          }],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"{{adminEmail}}\",\n  \"password\": \"{{adminPassword}}\"\n}" },
+            "url": "{{baseUrl}}/api/auth/login"
+          }
+        },
+        { "name": "Mi sesión", "request": { "method": "GET", "url": "{{baseUrl}}/api/auth/me" } }
+      ]
+    },
+    {
+      "name": "Usuarios - SuperAdmin",
+      "item": [
+        { "name": "Listar usuarios", "request": { "method": "GET", "url": "{{baseUrl}}/api/usuarios" } },
+        {
+          "name": "Crear técnico",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "if (pm.response.code === 201) pm.collectionVariables.set('tecnicoId', pm.response.json().id);"
+          ] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"Técnico de prueba\",\n  \"email\": \"tecnico.prueba@utmetropolitana.edu.mx\",\n  \"password\": \"Tecnico2026!\",\n  \"rol\": \"tecnico\",\n  \"tipoReportante\": null,\n  \"area\": \"Cómputo y redes\",\n  \"especialidad\": \"computo_redes\"\n}" },
+            "url": "{{baseUrl}}/api/usuarios"
+          }
+        },
+        {
+          "name": "Asignar contraseña a usuario existente",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"password\": \"NuevaClave2026!\"\n}" },
+            "url": "{{baseUrl}}/api/usuarios/{{usuarioId}}/password"
+          }
+        },
+        { "name": "Listar técnicos", "request": { "method": "GET", "url": "{{baseUrl}}/api/usuarios/tecnicos" } }
+      ]
+    },
+    {
+      "name": "Incidencias",
+      "item": [
+        { "name": "Listar según rol", "request": { "method": "GET", "url": "{{baseUrl}}/api/incidencias?pagina=1&tamanoPagina=20" } },
+        {
+          "name": "Crear - Reportante",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "if (pm.response.code === 201) pm.collectionVariables.set('incidenciaId', pm.response.json().id);"
+          ] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"titulo\": \"Equipo sin conexión a internet\",\n  \"descripcion\": \"El equipo del laboratorio no puede acceder a la red institucional.\",\n  \"categoria\": \"computo_redes\",\n  \"prioridad\": \"media\",\n  \"ubicacion\": { \"edificio\": \"A\", \"area\": \"Laboratorio 2\" },\n  \"detalleEspecifico\": { \"equipo\": \"PC-22\", \"tipo_falla\": \"red\" },\n  \"tags\": [\"internet\", \"laboratorio\"]\n}" },
+            "url": "{{baseUrl}}/api/incidencias"
+          }
+        },
+        {
+          "name": "Asignar técnico - Coordinador",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{ \"tecnicoId\": \"{{tecnicoId}}\" }" },
+            "url": "{{baseUrl}}/api/incidencias/{{incidenciaId}}/asignacion"
+          }
+        },
+        {
+          "name": "Registrar avance - Técnico",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"estadoNuevo\": \"en proceso\",\n  \"comentario\": \"Se revisó el cableado y se reemplazó el conector dañado.\",\n  \"horasTrabajadas\": 1.5,\n  \"visibilidad\": \"publica\"\n}" },
+            "url": "{{baseUrl}}/api/incidencias/{{incidenciaId}}/seguimientos"
+          }
+        },
+        {
+          "name": "Subir evidencia",
+          "request": {
+            "method": "POST",
+            "body": { "mode": "formdata", "formdata": [
+              { "key": "archivo", "type": "file", "src": [] },
+              { "key": "descripcion", "value": "Evidencia del trabajo realizado", "type": "text" },
+              { "key": "visibilidad", "value": "publica", "type": "text" }
+            ] },
+            "url": "{{baseUrl}}/api/incidencias/{{incidenciaId}}/evidencias"
+          }
+        },
+        { "name": "Consultar evidencias", "request": { "method": "GET", "url": "{{baseUrl}}/api/incidencias/{{incidenciaId}}/evidencias" } }
+      ]
+    },
+    {
+      "name": "Analítica",
+      "item": [
+        { "name": "Resumen", "request": { "method": "GET", "url": "{{baseUrl}}/api/analitica/resumen" } }
+      ]
+    }
+  ]
+}
