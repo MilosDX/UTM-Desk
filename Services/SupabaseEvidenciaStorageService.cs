@@ -94,9 +94,20 @@ public sealed class SupabaseEvidenciaStorageService : IEvidenciaStorageService
             throw new InvalidOperationException("Supabase no devolvió una URL firmada.");
         }
 
-        return rutaFirmada.StartsWith("http", StringComparison.OrdinalIgnoreCase)
-            ? rutaFirmada
-            : $"{_settings.Url.TrimEnd('/')}/{rutaFirmada.TrimStart('/')}";
+        if (rutaFirmada.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+        {
+            return rutaFirmada;
+        }
+
+        // Supabase devuelve la ruta firmada relativa a /storage/v1, por ejemplo
+        // "/object/sign/bucket/ruta?token=..." Hay que anteponer "storage/v1".
+        var rutaRelativa = rutaFirmada.TrimStart('/');
+        if (!rutaRelativa.StartsWith("storage/v1/", StringComparison.OrdinalIgnoreCase))
+        {
+            rutaRelativa = $"storage/v1/{rutaRelativa}";
+        }
+
+        return $"{_settings.Url.TrimEnd('/')}/{rutaRelativa}";
     }
 
     private void ValidarConfiguracion()
