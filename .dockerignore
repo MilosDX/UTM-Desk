@@ -1,0 +1,14 @@
+.git
+.gitignore
+.vs
+.vscode
+.vercel
+bin/
+obj/
+.keys/
+appsettings.Local.json
+.env.local
+.env
+*.log
+README.md
+postman/

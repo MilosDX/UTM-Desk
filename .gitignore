@@ -6,3 +6,6 @@ appsettings.Local.json
 .keys/
 *.user
 *.suo
+.vercel
+.env*
+*.log

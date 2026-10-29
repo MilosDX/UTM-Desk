@@ -20,6 +20,15 @@ public sealed record CrearIncidenciaRequest(
 public sealed record AsignarTecnicoRequest(
     [Required] string TecnicoId);
 
+public sealed record ActualizarIncidenciaRequest(
+    [Required, MaxLength(150)] string Titulo,
+    [Required, MaxLength(2000)] string Descripcion,
+    [Required] string Categoria,
+    [Required] string Prioridad,
+    [Required] UbicacionRequest Ubicacion,
+    JsonElement DetalleEspecifico,
+    IReadOnlyList<string>? Tags);
+
 public sealed record RegistrarSeguimientoRequest(
     [Required] string EstadoNuevo,
     [Required, MinLength(10), MaxLength(2000)] string Comentario,

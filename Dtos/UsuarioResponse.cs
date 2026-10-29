@@ -5,6 +5,7 @@ public sealed record UsuarioResponse(
     string Nombre,
     string Email,
     string Rol,
+    string? TipoReportante,
     string? Area,
     string? Especialidad,
     bool Activo);

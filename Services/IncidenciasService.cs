@@ -180,7 +180,10 @@ public sealed class IncidenciasService : IIncidenciasService
             {
                 UsuarioId = usuario.Id,
                 Nombre = usuario.Nombre,
-                Tipo = usuario.TipoReportante ?? Roles.Reportante
+                Tipo = usuario.TipoReportante ??
+                    (usuario.Rol == Roles.SuperAdmin
+                        ? TiposReportante.Administrativo
+                        : TiposReportante.Estudiante)
             },
             Ubicacion = new Ubicacion
             {
@@ -264,6 +267,119 @@ public sealed class IncidenciasService : IIncidenciasService
             .Push(item => item.HistorialSeguimiento, historial);
 
         return await ActualizarYDevolverAsync(id, usuario, actualizacion, cancellationToken);
+    }
+
+    public async Task<Incidencia> ActualizarAsync(
+        string id,
+        ActualizarIncidenciaRequest request,
+        UsuarioActual usuario,
+        CancellationToken cancellationToken = default)
+    {
+        if (usuario.Rol != Roles.SuperAdmin)
+        {
+            throw new ApiException(
+                StatusCodes.Status403Forbidden,
+                "Solo el Super Administrador puede editar incidencias.");
+        }
+
+        var incidencia = await ObtenerRequeridaAsync(id, usuario, cancellationToken);
+        var categoria = request.Categoria.Trim().ToLowerInvariant();
+        var prioridad = request.Prioridad.Trim().ToLowerInvariant();
+
+        if (!CategoriasIncidencia.Todas.Contains(categoria))
+        {
+            throw new ApiException(
+                StatusCodes.Status400BadRequest,
+                "La categoría no es válida.");
+        }
+
+        if (!Prioridades.Todas.Contains(prioridad))
+        {
+            throw new ApiException(
+                StatusCodes.Status400BadRequest,
+                "La prioridad no es válida.");
+        }
+
+        if (string.IsNullOrWhiteSpace(request.Ubicacion.Edificio) ||
+            string.IsNullOrWhiteSpace(request.Ubicacion.Area))
+        {
+            throw new ApiException(
+                StatusCodes.Status400BadRequest,
+                "Indica el edificio y el área de la incidencia.");
+        }
+
+        var ahora = DateTime.UtcNow;
+        var actualizaciones = new List<UpdateDefinition<Incidencia>>
+        {
+            Builders<Incidencia>.Update.Set(item => item.Titulo, request.Titulo.Trim()),
+            Builders<Incidencia>.Update.Set(item => item.Descripcion, request.Descripcion.Trim()),
+            Builders<Incidencia>.Update.Set(item => item.Categoria, categoria),
+            Builders<Incidencia>.Update.Set(item => item.Prioridad, prioridad),
+            Builders<Incidencia>.Update.Set(item => item.Ubicacion, new Ubicacion
+            {
+                Edificio = request.Ubicacion.Edificio.Trim(),
+                Area = request.Ubicacion.Area.Trim()
+            }),
+            Builders<Incidencia>.Update.Set(item => item.Tags, NormalizarTags(request.Tags)),
+            Builders<Incidencia>.Update.Set(item => item.FechaActualizacion, ahora)
+        };
+
+        if (request.DetalleEspecifico.ValueKind == JsonValueKind.Object)
+        {
+            actualizaciones.Add(Builders<Incidencia>.Update.Set(
+                item => item.DetalleEspecifico,
+                BsonDocument.Parse(request.DetalleEspecifico.GetRawText())));
+        }
+        else if (request.DetalleEspecifico.ValueKind is not (JsonValueKind.Undefined or JsonValueKind.Null))
+        {
+            throw new ApiException(
+                StatusCodes.Status400BadRequest,
+                "detalleEspecifico debe ser un objeto JSON.");
+        }
+
+        actualizaciones.Add(Builders<Incidencia>.Update.Push(
+            item => item.HistorialSeguimiento,
+            new EntradaHistorial
+            {
+                Accion = "incidencia_editada",
+                EstadoAnterior = incidencia.Estado,
+                EstadoNuevo = incidencia.Estado,
+                Comentario = "Se actualizaron los datos generales de la incidencia.",
+                UsuarioId = usuario.Id,
+                NombreUsuario = usuario.Nombre,
+                Visibilidad = Visibilidades.Publica,
+                Fecha = ahora
+            }));
+
+        return await ActualizarYDevolverAsync(
+            id,
+            usuario,
+            Builders<Incidencia>.Update.Combine(actualizaciones),
+            cancellationToken);
+    }
+
+    public async Task<bool> EliminarAsync(
+        string id,
+        UsuarioActual usuario,
+        CancellationToken cancellationToken = default)
+    {
+        if (usuario.Rol != Roles.SuperAdmin)
+        {
+            throw new ApiException(
+                StatusCodes.Status403Forbidden,
+                "Solo el Super Administrador puede eliminar incidencias.");
+        }
+
+        if (!ObjectId.TryParse(id, out _))
+        {
+            return false;
+        }
+
+        var resultado = await ObtenerColeccion().DeleteOneAsync(
+            Builders<Incidencia>.Filter.Eq(item => item.Id, id),
+            cancellationToken);
+
+        return resultado.DeletedCount == 1;
     }
 
     public async Task<Incidencia> RegistrarSeguimientoAsync(

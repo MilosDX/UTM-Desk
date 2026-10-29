@@ -1,5 +1,6 @@
 using UTMDesk.Api.Models;
 using UTMDesk.Api.Dtos;
+using UTMDesk.Api.Security;
 
 namespace UTMDesk.Api.Services;
 
@@ -22,6 +23,17 @@ public interface IUsuariosService
 
     Task<Usuario> CrearAsync(
         CrearUsuarioRequest request,
+        CancellationToken cancellationToken = default);
+
+    Task<Usuario?> ActualizarAsync(
+        string id,
+        ActualizarUsuarioRequest request,
+        UsuarioActual usuario,
+        CancellationToken cancellationToken = default);
+
+    Task<bool> EliminarAsync(
+        string id,
+        UsuarioActual usuario,
         CancellationToken cancellationToken = default);
 
     Task<Usuario?> CambiarEstadoAsync(

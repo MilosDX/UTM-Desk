@@ -61,7 +61,7 @@ public sealed class IncidenciasController : ControllerBase
                 usuario.Rol != Roles.Reportante));
     }
 
-    [Authorize(Roles = Roles.Reportante)]
+    [Authorize(Roles = Roles.Reportante + "," + Roles.SuperAdmin)]
     [HttpPost]
     [ProducesResponseType(typeof(IncidenciaResponse), StatusCodes.Status201Created)]
     public async Task<ActionResult<IncidenciaResponse>> Crear(
@@ -146,6 +146,36 @@ public sealed class IncidenciasController : ControllerBase
         return Ok(IncidenciaResponse.FromModel(
             incidencia,
             usuario.Rol != Roles.Reportante));
+    }
+
+    [Authorize(Roles = Roles.SuperAdmin)]
+    [HttpPut("{id}")]
+    public async Task<ActionResult<IncidenciaResponse>> Actualizar(
+        string id,
+        ActualizarIncidenciaRequest request,
+        CancellationToken cancellationToken)
+    {
+        var incidencia = await _incidenciasService.ActualizarAsync(
+            id,
+            request,
+            UsuarioActual.FromClaims(User),
+            cancellationToken);
+
+        return Ok(IncidenciaResponse.FromModel(incidencia, true));
+    }
+
+    [Authorize(Roles = Roles.SuperAdmin)]
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Eliminar(
+        string id,
+        CancellationToken cancellationToken)
+    {
+        var eliminada = await _incidenciasService.EliminarAsync(
+            id,
+            UsuarioActual.FromClaims(User),
+            cancellationToken);
+
+        return eliminada ? NoContent() : NotFound();
     }
 
     [Authorize(Roles = Roles.Reportante + "," + Roles.Tecnico + "," + Roles.Coordinador + "," + Roles.SuperAdmin)]

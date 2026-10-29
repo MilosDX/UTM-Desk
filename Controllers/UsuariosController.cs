@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UTMDesk.Api.Constants;
 using UTMDesk.Api.Dtos;
+using UTMDesk.Api.Security;
 using UTMDesk.Api.Services;
 
 namespace UTMDesk.Api.Controllers;
@@ -33,6 +34,7 @@ public sealed class UsuariosController : ControllerBase
             usuario.Nombre,
             usuario.Email,
             usuario.Rol,
+            usuario.TipoReportante,
             usuario.Area,
             usuario.Especialidad,
             usuario.Activo)));
@@ -55,6 +57,36 @@ public sealed class UsuariosController : ControllerBase
     {
         var usuario = await _usuariosService.CrearAsync(request, cancellationToken);
         return CreatedAtAction(nameof(ObtenerTodos), Mapear(usuario));
+    }
+
+    [HttpPut("{id}")]
+    [Authorize(Roles = Roles.SuperAdmin)]
+    public async Task<ActionResult<UsuarioResponse>> Actualizar(
+        string id,
+        ActualizarUsuarioRequest request,
+        CancellationToken cancellationToken)
+    {
+        var usuario = await _usuariosService.ActualizarAsync(
+            id,
+            request,
+            UsuarioActual.FromClaims(User),
+            cancellationToken);
+
+        return usuario is null ? NotFound() : Ok(Mapear(usuario));
+    }
+
+    [HttpDelete("{id}")]
+    [Authorize(Roles = Roles.SuperAdmin)]
+    public async Task<IActionResult> Eliminar(
+        string id,
+        CancellationToken cancellationToken)
+    {
+        var eliminado = await _usuariosService.EliminarAsync(
+            id,
+            UsuarioActual.FromClaims(User),
+            cancellationToken);
+
+        return eliminado ? NoContent() : NotFound();
     }
 
     [HttpPatch("{id}/estado")]
@@ -93,6 +125,7 @@ public sealed class UsuariosController : ControllerBase
             usuario.Nombre,
             usuario.Email,
             usuario.Rol,
+            usuario.TipoReportante,
             usuario.Area,
             usuario.Especialidad,
             usuario.Activo);

@@ -35,14 +35,46 @@ public sealed class AuthService : IAuthService
             return null;
         }
 
-        var resultado = _passwordHasher.VerifyHashedPassword(
+        var resultado = VerificarPassword(
             usuario,
             usuario.PasswordHash,
             request.Password);
 
-        return resultado == PasswordVerificationResult.Failed
-            ? null
-            : _tokenService.CrearToken(usuario);
+        return resultado
+            ? _tokenService.CrearToken(usuario)
+            : null;
+    }
+
+    private bool VerificarPassword(
+        Usuario usuario,
+        string hash,
+        string password)
+    {
+        // Las cuentas históricas/demo usan bcrypt; las nuevas usan el
+        // hasher de ASP.NET Identity (PBKDF2 en Base64).
+        if (hash.StartsWith("$2", StringComparison.Ordinal))
+        {
+            try
+            {
+                return BCrypt.Net.BCrypt.Verify(password, hash);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        try
+        {
+            return _passwordHasher.VerifyHashedPassword(
+                usuario,
+                hash,
+                password) != PasswordVerificationResult.Failed;
+        }
+        catch (FormatException)
+        {
+            return false;
+        }
     }
 
     public Task<Usuario?> ObtenerUsuarioAsync(

@@ -1,6 +1,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using UTMDesk.Api.Configuration;
@@ -22,8 +23,23 @@ var jwtSettings = builder.Configuration
 builder.Services.AddControllers();
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
-builder.Services.AddDataProtection().PersistKeysToFileSystem(
-    new DirectoryInfo(Path.Combine(builder.Environment.ContentRootPath, ".keys")));
+
+var dataProtectionPath = builder.Configuration["DataProtection:KeysPath"];
+var dataProtectionDirectory = string.IsNullOrWhiteSpace(dataProtectionPath)
+    ? new DirectoryInfo(Path.Combine(builder.Environment.ContentRootPath, ".keys"))
+    : new DirectoryInfo(dataProtectionPath);
+dataProtectionDirectory.Create();
+builder.Services.AddDataProtection().PersistKeysToFileSystem(dataProtectionDirectory);
+
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders =
+        ForwardedHeaders.XForwardedFor |
+        ForwardedHeaders.XForwardedProto |
+        ForwardedHeaders.XForwardedHost;
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
 
 builder.Services.Configure<MongoDbSettings>(
     builder.Configuration.GetSection(MongoDbSettings.SectionName));
@@ -57,12 +73,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("Frontend", policy =>
     {
-        var origenes = builder.Configuration
-            .GetSection("Cors:AllowedOrigins")
-            .Get<string[]>() ?? ["http://localhost:5173"];
-
-        policy
-            .WithOrigins(origenes)
+        policy.SetIsOriginAllowed(_ => true)
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
@@ -78,10 +89,9 @@ builder.Services.AddHttpClient<IEvidenciaStorageService, SupabaseEvidenciaStorag
 var app = builder.Build();
 
 app.UseExceptionHandler();
-if (!app.Environment.IsDevelopment())
-{
-    app.UseHttpsRedirection();
-}
+app.UseForwardedHeaders();
+app.UseDefaultFiles();
+app.UseStaticFiles();
 app.UseCors("Frontend");
 app.UseAuthentication();
 app.UseAuthorization();
@@ -98,3 +108,4 @@ await app.Services
     .CrearSuperAdminSiNoExisteAsync();
 
 app.Run();
+

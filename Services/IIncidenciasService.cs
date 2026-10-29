@@ -27,6 +27,17 @@ public interface IIncidenciasService
         UsuarioActual usuario,
         CancellationToken cancellationToken = default);
 
+    Task<Incidencia> ActualizarAsync(
+        string id,
+        ActualizarIncidenciaRequest request,
+        UsuarioActual usuario,
+        CancellationToken cancellationToken = default);
+
+    Task<bool> EliminarAsync(
+        string id,
+        UsuarioActual usuario,
+        CancellationToken cancellationToken = default);
+
     Task<Incidencia> RegistrarSeguimientoAsync(
         string id,
         RegistrarSeguimientoRequest request,
