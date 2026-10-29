@@ -15,7 +15,8 @@ Backend de la mesa de ayuda UTM Desk, construido con ASP.NET Core 8, MongoDB Atl
 - Administración de usuarios y contraseñas por SuperAdmin.
 - Colección de Postman lista para importar.
 
-No se incluyó frontend.
+El frontend web vive en [`frontend/`](frontend/) y la copia que sirve la API en
+producción está en [`wwwroot/index.html`](wwwroot/index.html).
 
 ## Ejecutar
 
@@ -27,6 +28,22 @@ dotnet run --launch-profile http
 La API queda en `http://localhost:5254`. Comprueba el estado en `GET /health`.
 
 La configuración privada está en `appsettings.Local.json`; ese archivo está ignorado por Git. La cuenta inicial de SuperAdmin también está ahí. Copia su contraseña a la variable `adminPassword` de Postman, ejecuta **Auth / Login** y la colección guardará el token automáticamente.
+
+## Frontend
+
+El frontend es HTML y JavaScript sin paso de compilación. Está en [`frontend/`](frontend/):
+
+- `frontend/index.html` — panel principal: login, incidencias, analítica y administración.
+- `frontend/UTM_Desk_Incidencias.html` — vista de incidencias.
+- `frontend/UTM_Desk_Incidencias (2).html` — copia de respaldo de la vista anterior.
+
+`wwwroot/index.html` es la copia que el backend publica en `/`, así que al editar el
+frontend hay que copiarla a `wwwroot/` para que Render sirva los cambios.
+
+Para probarlo, abre `frontend/index.html` con la API en marcha. Desde `localhost` o
+`file://` apunta solo a `http://localhost:5254`; en cualquier otro origen define
+`window.API_BASE_URL` con la URL del backend (por ejemplo, la de Render) antes de cargar
+el script.
 
 ## Postman
 
@@ -88,7 +105,7 @@ Un Blueprint crea un servicio nuevo y la URL depende del nombre, así que para n
 cambiar el enlace hay que actualizar el servicio que ya existe:
 
 1. Render Dashboard → servicio `utm-desk` → **Settings**.
-2. En **Build & Deploy**, cambia el repositorio a `UraniumLogic/UTM-Desk` y la rama
+2. En **Build & Deploy**, cambia el repositorio a `MilosDX/UTM-Desk` y la rama
    a `main`.
 3. Cambia el runtime a **Docker** y usa `./Dockerfile` como Dockerfile Path.
 4. En **Environment** define las variables de entorno (las mismas de `render.yaml`):
