@@ -1,0 +1,59 @@
+# Blueprint de Render para UTM Desk (API ASP.NET Core + frontend de wwwroot).
+#
+# Uso:
+#   1. Render Dashboard -> New -> Blueprint -> selecciona este repositorio.
+#   2. Render detecta este archivo y crea el servicio con el Dockerfile.
+#   3. Rellena las variables marcadas con "sync: false" (secretos) en el panel.
+#
+# La aplicación se sirve completa en https://<nombre>.onrender.com:
+#   /health          -> comprobación de estado
+#   /api/*           -> API
+#   /                -> frontend estático de wwwroot
+
+services:
+  - type: web
+    name: utm-desk-api
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+
+      # --- MongoDB Atlas ---
+      - key: MongoDb__ConnectionString
+        sync: false
+      - key: MongoDb__DatabaseName
+        value: utm_desk_cloud
+      - key: MongoDb__UsuariosCollectionName
+        value: usuarios
+      - key: MongoDb__IncidenciasCollectionName
+        value: incidencias_campus
+
+      # --- Supabase Storage (bucket privado de evidencias) ---
+      - key: Supabase__Url
+        sync: false
+      - key: Supabase__SecretKey
+        sync: false
+      - key: Supabase__BucketName
+        value: utm-desk-evidencias
+      - key: Supabase__SignedUrlExpirationMinutes
+        value: 30
+
+      # --- JWT ---
+      - key: Jwt__Issuer
+        value: UTMDesk.Api
+      - key: Jwt__Audience
+        value: UTMDesk.Client
+      - key: Jwt__Key
+        generateValue: true
+      - key: Jwt__ExpirationMinutes
+        value: 120
+
+      # --- Cuenta inicial (opcional) ---
+      - key: SuperAdminSeed__Enabled
+        value: "false"

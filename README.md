@@ -74,6 +74,38 @@ La llave secreta solo pertenece al backend. Nunca debe copiarse a React, Vercel 
 }
 ```
 
+## Despliegue
+
+La API y el frontend de `wwwroot` se despliegan juntos en un contenedor. El archivo
+`render.yaml` describe el servicio para [Render](https://render.com) y el
+`Dockerfile` compila y publica la aplicación.
+
+### Render (API + frontend)
+
+1. En Render: **New → Blueprint** y conecta este repositorio.
+2. Render lee `render.yaml` y crea el servicio `utm-desk-api` con el `Dockerfile`.
+3. Completa en **Environment** las variables marcadas con `sync: false`:
+   - `MongoDb__ConnectionString`
+   - `Supabase__Url`
+   - `Supabase__SecretKey`
+4. Guarda los cambios; Render redespliega automáticamente.
+5. Verifica `https://<tu-servicio>.onrender.com/health`.
+
+La aplicación queda completa en esa URL: `/` sirve el frontend, `/api/*` la API y
+`/health` la comprobación de estado.
+
+> `appsettings.Local.json` no se incluye en la imagen (está en `.dockerignore`), por
+> eso la configuración de producción se pasa **siempre** por variables de entorno.
+
+### Vercel (solo frontend estático)
+
+Vercel no ejecuta aplicaciones ASP.NET Core, así que el backend debe vivir en Render
+(o cualquier hosting con Docker). Si publicas un frontend aparte en Vercel, apúntalo
+a la URL de Render con `VITE_API_URL=https://<tu-servicio>.onrender.com`.
+
+Nunca pongas `Supabase__SecretKey` en Vercel ni en el frontend: esa llave solo
+pertenece al backend.
+
 ## Endpoints
 
 - `POST /api/auth/login`
