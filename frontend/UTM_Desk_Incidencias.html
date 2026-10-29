@@ -1,0 +1,1742 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title>UTM Desk | Campus Operations</title>
+<style>
+
+:root{--bg:#050807;--surface:#101612;--raised:#151e18;--line:#25352b;--text:#eef5f0;--muted:#97aaa0;--green:#19e078;--soft:#112d1d;--blue:#8cbedb;--orange:#dca779;--yellow:#d8cc86;--error:#efa88e;--radius:16px}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif}button,input,select,textarea{font:inherit}button,a{ -webkit-tap-highlight-color:transparent}button{border:1px solid transparent;border-radius:10px;background:var(--green);color:#041309;padding:11px 17px;font-weight:650;cursor:pointer;transition:background .15s,border-color .15s}button:hover{filter:brightness(1.08)}button:disabled{opacity:.45;cursor:wait}button:focus-visible,a:focus-visible{outline:2px solid var(--green);outline-offset:4px}button.secondary{background:var(--soft);color:var(--green);border-color:#22452e}button.ghost{background:transparent;color:var(--muted);border-color:var(--line)}button.link{background:none;border:0;padding:4px 0;color:var(--green);text-align:left}input,textarea,select{display:block;width:100%;border:1px solid var(--line);border-radius:10px;background:#080e0a;color:var(--text);padding:12px 13px;outline:none}input:focus,textarea:focus,select:focus{border-color:var(--green);box-shadow:0 0 0 3px #19e07814}input::placeholder,textarea::placeholder{color:#6d8476}input[type=file]{border-style:dashed;padding:18px}textarea{min-height:115px;resize:vertical}label{display:block;font-size:12px;font-weight:650;margin-bottom:7px}label .opt{font-weight:400;color:var(--muted)}h1,h2,h3,p{margin:0}h1{font-size:32px;line-height:1.18;letter-spacing:-1px;font-weight:650}h2{font-size:18px;letter-spacing:-.35px}h3{font-size:14px}p{color:var(--muted)}a{color:var(--green)}.layout{min-height:100vh;display:grid;grid-template-columns:230px minmax(0,1fr)}.sidebar{position:sticky;top:0;height:100vh;background:#090e0b;border-right:1px solid var(--line);padding:28px 20px;display:flex;flex-direction:column;gap:28px}.brand{font-weight:750;font-size:24px;letter-spacing:-1px;color:var(--text);display:flex;align-items:center;gap:10px}.mark{width:22px;height:26px;background:var(--green);clip-path:polygon(0 0,100% 0,100% 40%,45% 40%,45% 100%,0 100%)}.brand span:last-child{color:var(--green)}.eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:1.8px;color:var(--muted);font-weight:650}.role{display:inline-flex;align-items:center;gap:6px;color:var(--green);font-size:11px;font-weight:600;padding:5px 9px;background:var(--soft);border:1px solid #24442e;border-radius:7px;width:max-content}.role:before{content:'';width:5px;height:5px;border-radius:50%;background:var(--green)}nav{display:flex;flex-direction:column;gap:6px}nav button{width:100%;text-align:left;background:transparent;color:var(--muted);border-color:transparent;padding:12px}nav button.active{background:var(--soft);color:var(--green);border-color:#22412b}.sidebar footer{margin-top:auto;display:grid;gap:14px}.userName{font-size:12px;font-weight:600}.small{font-size:12px}.muted{color:var(--muted)}.main{min-width:0;padding:28px 42px 60px;max-width:1550px;width:100%;margin:0 auto}.topbar{display:flex;justify-content:space-between;align-items:center;gap:14px;padding-bottom:25px;border-bottom:1px solid var(--line);margin-bottom:32px}.heading{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;margin-bottom:28px}.heading p{margin-top:10px;max-width:680px}.row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.between{justify-content:space-between}.stack{display:grid;gap:18px}.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px}.cardtitle{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:16px}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:25px}.metric .number{font-size:35px;font-weight:650;letter-spacing:-1.4px;margin:13px 0 2px}.metric .number.green{color:var(--green)}.badge{padding:5px 9px;border-radius:7px;background:#17291f;color:#a4d9b8;font-size:11px;white-space:nowrap}.badge.attention{background:#142731;color:var(--blue)}.badge.resolved{background:var(--soft);color:var(--green)}.ticket{padding:18px 20px}.ticket h3{font-size:15px;margin-bottom:5px}.ticket-meta{font-size:11px;color:var(--muted)}.tag{background:#17231b;color:#b4cbbb;border:1px solid #2a3c30;border-radius:6px;padding:4px 8px;font-size:11px;display:inline-flex;gap:8px;align-items:center;font-weight:500}.tag.active{background:var(--soft);color:var(--green);border-color:var(--green)}button.tag{padding:5px 9px}.tag button{background:transparent;color:inherit;padding:0;border:0;line-height:1}.tags{display:flex;gap:7px;flex-wrap:wrap}.filters{display:flex;gap:12px;margin-bottom:16px}.filters input{flex:1}.split{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:22px;align-items:start}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.field{min-width:0}.field.full{grid-column:1/-1}.section{border-top:1px solid var(--line);padding-top:22px;margin-top:22px}.section:first-child{border:0;margin:0;padding:0}.section h2{margin-bottom:18px}.step{display:inline-flex;color:var(--green);background:var(--soft);border-radius:6px;padding:2px 7px;font-size:12px;margin-right:9px}.help{font-size:11px;color:var(--muted);margin-top:6px}.formfooter{display:flex;justify-content:space-between;align-items:center;gap:15px;border-top:1px solid var(--line);padding-top:22px;margin-top:24px}.field-error{font-size:12px;color:var(--error);margin-top:6px}.invalid{border-color:var(--error)}.errorbox{border:1px solid #694434;background:#291b14;color:var(--error);padding:16px 18px;border-radius:10px;margin-bottom:20px}.errorbox ul{margin:9px 0 0;padding-left:20px}.errorbox p{color:var(--error)}.notice{border:1px solid #285339;background:var(--soft);color:#b6e4c8;padding:15px 18px;border-radius:10px;margin-bottom:20px}.guidance{display:grid;gap:20px}.guidance li{margin-bottom:10px;color:var(--muted);font-size:12px}.guidance ul{padding-left:16px;margin:10px 0 0}.divider{height:1px;background:var(--line);margin:20px 0}.detailgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.detail dt{font-size:11px;color:var(--muted)}.detail dd{margin:5px 0 0;font-weight:550}.detail{padding-bottom:14px;border-bottom:1px solid var(--line)}.timeline{border-left:1px solid var(--line);padding:0 0 0 22px;margin:8px}.event{position:relative;padding-bottom:25px}.event:before{position:absolute;left:-27px;top:7px;content:'';width:9px;height:9px;border-radius:50%;background:var(--green)}.event p{font-size:13px;margin-top:6px}.success-icon{height:44px;width:44px;background:var(--soft);border-radius:12px;display:grid;place-items:center;color:var(--green);font-size:23px;margin-bottom:20px}.changes{border-collapse:collapse;width:100%;font-size:13px}.changes th{text-align:left;color:var(--muted);font-size:10px;letter-spacing:1px;background:#0b110d}.changes th,.changes td{padding:15px 12px;border-bottom:1px solid var(--line);vertical-align:top}.changes td:last-child{color:var(--green)}.tablewrap{overflow:auto}.fileitem{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#0c130e;padding:12px;border-radius:8px;margin-top:10px;font-size:12px}.empty{padding:44px;text-align:center}.empty h2{margin-bottom:10px}.public{max-width:1320px;margin:auto;padding:30px 35px 60px}.publicnav{display:flex;justify-content:space-between;align-items:center;padding-bottom:25px;border-bottom:1px solid var(--line)}.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:70px;align-items:center;padding:70px 0}.hero h1{font-size:59px;letter-spacing:-2.6px;line-height:1.05;margin:20px 0}.hero h1 em{font-style:normal;color:var(--green)}.hero p{font-size:16px;max-width:550px;margin-bottom:25px}.flow .row{flex-wrap:nowrap;padding:18px 0;border-bottom:1px solid var(--line)}.flow .row:last-child{border:0}.flow .index{font-size:11px;color:var(--green);width:30px}.featuregrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.featuregrid .card{padding:25px}.featuregrid p{font-size:12px;margin-top:12px}.loginlayout{display:grid;grid-template-columns:1fr 460px;gap:80px;align-items:start;max-width:1080px;margin:60px auto}.loginintro h1{font-size:47px;letter-spacing:-2px;margin:16px 0}.loginform h2{margin-bottom:8px}.loginform .field{margin-top:20px}.loginform button[type=submit]{width:100%;margin-top:25px}.accountlist{display:grid;gap:13px;margin-top:15px}.account{font-size:12px;padding-bottom:12px;border-bottom:1px solid var(--line)}.account code{color:var(--text);font-family:inherit}.account .role{margin-bottom:6px}.account p{font-size:11px}.progress{height:8px;background:#17221b;border-radius:5px;overflow:hidden}.progress div{height:100%;background:var(--green);border-radius:5px}.analyticsrow{display:grid;grid-template-columns:190px 1fr 35px;align-items:center;gap:20px;margin-top:20px}.categoryhint{border-left:2px solid var(--green);padding-left:14px;margin-top:16px}.sr{position:absolute;left:-9999px}.loading{color:var(--muted);padding:50px;text-align:center}@media(max-width:1100px){.main{padding:25px}.split{grid-template-columns:1fr}.guidance{grid-template-columns:1fr 1fr}.loginlayout{gap:35px}.hero{gap:30px}.hero h1{font-size:48px}}@media(max-width:780px){.layout{display:block}.sidebar{position:static;height:auto;padding:20px;gap:18px}.sidebar nav{flex-direction:row;overflow:auto}nav button{width:auto;white-space:nowrap}.sidebar footer{display:none}.sidebar .eyebrow,.sidebar .role{display:none}.main{padding:20px}.heading{flex-direction:column}.formgrid,.detailgrid,.featuregrid,.metrics,.hero,.loginlayout{grid-template-columns:1fr}.guidance{grid-template-columns:1fr}.hero{padding:45px 0;gap:30px}.hero h1{font-size:43px}.public{padding:22px}.loginlayout{margin:35px 0}.loginintro h1{font-size:37px}.analyticsrow{grid-template-columns:120px 1fr 25px;gap:12px}.topbar{align-items:flex-start}.publicnav .eyebrow{display:none}.card{padding:20px}.formfooter{align-items:stretch;flex-direction:column}.filters{flex-wrap:wrap}}
+
+.auth-screen{min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:46px 24px 48px;position:relative;background:#080b09}.auth-panel{width:100%;max-width:460px;margin:auto}.auth-brand{display:flex;justify-content:center;margin-bottom:28px}.auth-brand .brand{font-size:23px}.auth-brand .mark{height:24px;width:20px}.auth-title{font-size:64px;letter-spacing:-2.8px;line-height:1.08;text-align:center;margin:0 0 16px;font-weight:750}.auth-description{font-size:13px;text-align:center;margin-bottom:34px;color:var(--muted)}.auth-form{background:transparent;border:0;padding:0}.auth-form .field{margin-top:22px}.auth-form label{font-size:14px;margin-bottom:10px}.auth-form input{height:58px;background:#0c110e;border-color:#4b5d50;font-size:15px;padding:15px 16px;cursor:text;pointer-events:auto;user-select:text}.auth-form input:focus{border-color:var(--green)}.auth-form .auth-submit{height:58px;border-radius:999px;width:100%;font-size:17px;font-weight:750;margin-top:30px;background:var(--green);color:#031308}.auth-password{position:relative}.auth-password input{padding-right:85px}.password-toggle{position:absolute;right:12px;top:43px;background:transparent;color:var(--muted);border:0;padding:7px;font-size:12px;font-weight:550}.auth-note{text-align:center;font-size:11px;line-height:1.8;margin-top:25px;color:var(--muted)}.auth-back{position:absolute;top:24px;left:28px;font-size:12px}.auth-form .errorbox{margin:0 0 22px}.auth-form .invalid{border-color:var(--error)}@media(max-width:640px){.auth-screen{padding:92px 24px 40px}.auth-title{font-size:50px;letter-spacing:-2px}.auth-panel{max-width:420px}.auth-back{top:18px;left:18px}.auth-brand{margin-bottom:24px}.auth-description{margin-bottom:26px}.auth-form input{height:56px}.auth-form .auth-submit{height:56px}}
+
+</style></head><body><div id="app"></div><script>
+
+'use strict';
+
+// -------------------------------------------------------------
+// CONFIGURACIÓN Y CLIENTE API
+// -------------------------------------------------------------
+const API_BASE = window.API_BASE_URL || (window.location.port === '5254' ? '' : 'http://localhost:5254');
+
+async function api(endpoint, options = {}) {
+  const token = sessionStorage.getItem('utm_token') || localStorage.getItem('utm_token');
+  const headers = { ...options.headers };
+
+  if (token) {
+    headers['Authorization'] = 'Bearer ' + token;
+  }
+
+  if (options.body && !(options.body instanceof FormData) && !headers['Content-Type']) {
+    headers['Content-Type'] = 'application/json';
+  }
+
+  const url = endpoint.startsWith('http') ? endpoint : API_BASE + endpoint;
+  
+  try {
+    const res = await fetch(url, { ...options, headers });
+
+    if (res.status === 401) {
+      if (user) {
+        logout('Tu sesión ha expirado. Inicia sesión nuevamente.');
+      }
+      throw new Error('Credenciales inválidas o sesión no autorizada.');
+    }
+
+    if (!res.ok) {
+      let errorMsg = 'Error en el servidor (' + res.status + ')';
+      try {
+        const errorData = await res.json();
+        errorMsg = errorData.detail || errorData.title || errorData.message || (errorData.errors ? Object.values(errorData.errors).flat().join(', ') : errorMsg);
+      } catch {
+        const text = await res.text();
+        if (text) errorMsg = text;
+      }
+      throw new Error(errorMsg);
+    }
+
+    if (res.status === 204) return null;
+    return await res.json();
+  } catch (err) {
+    if (err.name === 'TypeError' && err.message.includes('fetch')) {
+      throw new Error('No se pudo conectar con la API en ' + (API_BASE || window.location.origin) + '. Verifica que el backend esté ejecutándose.');
+    }
+    throw err;
+  }
+}
+
+async function apiUpload(endpoint, formData) {
+  const token = sessionStorage.getItem('utm_token') || localStorage.getItem('utm_token');
+  const headers = {};
+  if (token) {
+    headers['Authorization'] = 'Bearer ' + token;
+  }
+  const url = endpoint.startsWith('http') ? endpoint : API_BASE + endpoint;
+  const res = await fetch(url, {
+    method: 'POST',
+    headers,
+    body: formData
+  });
+
+  if (!res.ok) {
+    let errorMsg = 'Error al subir evidencia (' + res.status + ')';
+    try {
+      const errJson = await res.json();
+      errorMsg = errJson.detail || errJson.title || errorMsg;
+    } catch {}
+    throw new Error(errorMsg);
+  }
+  return await res.json();
+}
+
+// -------------------------------------------------------------
+// CONSTANTES Y DICCIONARIOS
+// -------------------------------------------------------------
+const CATS = {
+  computo_redes: 'Cómputo y redes',
+  infraestructura: 'Infraestructura',
+  academico: 'Servicios académicos'
+};
+
+const STATUS = {
+  abierta: 'Abierta',
+  'en proceso': 'En proceso',
+  'en espera': 'En espera',
+  resuelta: 'Resuelta',
+  cerrada: 'Cerrada'
+};
+
+const STATUSES = ['abierta', 'en proceso', 'en espera', 'resuelta', 'cerrada'];
+const WORK_STATUSES = ['en proceso', 'en espera', 'resuelta'];
+
+const ROLES_LABELS = {
+  reportante: 'Reportante',
+  tecnico: 'Técnico',
+  coordinador: 'Coordinador',
+  directivo: 'Directivo',
+  superAdmin: 'Super Administrador'
+};
+
+const SPEC = {
+  computo_redes: [
+    ['tipo_equipo', 'Tipo de equipo', true],
+    ['tipo_falla', 'Tipo de falla', true],
+    ['direccion_ip', 'Dirección IP', false],
+    ['vlan', 'VLAN', false]
+  ],
+  infraestructura: [
+    ['tipo_dano', 'Tipo de daño', true],
+    ['riesgo_seguridad', 'Riesgo de seguridad', true, ['bajo', 'medio', 'alto']],
+    ['requiere_insumos', '¿Requiere insumos?', true, [['si', 'Sí'], ['no', 'No']]],
+    ['insumos_requeridos', 'Insumos requeridos', false],
+    ['requiere_contratista', '¿Requiere contratista?', true, [['si', 'Sí'], ['no', 'No']]]
+  ],
+  academico: [
+    ['plataforma', 'Plataforma', true],
+    ['codigo_curso', 'Código del curso', true],
+    ['periodo_escolar', 'Periodo escolar', true],
+    ['estudiantes_afectados', 'Estudiantes afectados', true],
+    ['codigo_error', 'Código de error', false]
+  ]
+};
+
+// -------------------------------------------------------------
+// ESTADO DE LA APLICACIÓN
+// -------------------------------------------------------------
+let user = null;
+let screen = 'home';
+let selected = null;
+let selectedTicket = null;
+let ticketEvidence = [];
+let tickets = [];
+let query = '';
+let filterTags = [];
+let filterEstado = '';
+let filterCategoria = '';
+let page = 1;
+const pageSize = 10;
+let totalTickets = 0;
+
+let draft = null;
+let workDraft = null;
+let assignDraft = null;
+let closeDraft = null;
+let reopenDraft = null;
+let userFormDraft = null;
+
+let errors = {};
+let files = [];
+let completion = null;
+let notice = '';
+let busy = false;
+let techniciansCache = [];
+let usersCache = [];
+let analyticsCache = null;
+
+const app = document.getElementById('app');
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const normalize = s => String(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+const cleanTag = s => normalize(s).replace(/^#+/, '').trim().replace(/\s+/g, '_').replace(/[^a-z0-9_-]/g, '').slice(0, 32);
+
+// -------------------------------------------------------------
+// HELPERS DE ROL Y ALCANCE
+// -------------------------------------------------------------
+const is = r => !!user && user.rol === r;
+
+const brand = () => '<div class="brand"><i class="mark" aria-hidden="true"></i>UTM<span>desk</span></div>';
+
+const roleLabel = () => ROLES_LABELS[user?.rol] || user?.rol || 'Usuario';
+
+const scope = () => {
+  if (!user) return '';
+  switch (user.rol) {
+    case 'reportante': return 'Únicamente tus reportes';
+    case 'tecnico': return 'Incidencias asignadas a ti';
+    case 'coordinador': return 'Administración · ' + (CATS[user.area] || user.area || 'Infraestructura');
+    case 'directivo': return 'Todo el campus · Solo lectura';
+    case 'superAdmin': return 'Control global del sistema';
+    default: return '';
+  }
+};
+
+function canCreate() {
+  return !!user && (user.rol === 'reportante' || user.rol === 'superAdmin');
+}
+
+function canWork(t) {
+  if (!user || !t) return false;
+  if (user.rol === 'superAdmin') return true;
+  if (user.rol === 'tecnico' && t.tecnicoAsignado?.usuarioId === user.id) return true;
+  if (user.rol === 'coordinador' && t.categoria === user.area) return true;
+  return false;
+}
+
+function canAssign(t) {
+  if (!user || !t) return false;
+  if (user.rol === 'superAdmin') return true;
+  if (user.rol === 'coordinador' && t.categoria === user.area) return true;
+  return false;
+}
+
+function canClose(t) {
+  if (!user || !t) return false;
+  if (t.estado === 'cerrada') return false;
+  return user.rol === 'coordinador' || user.rol === 'superAdmin';
+}
+
+function canReopen(t) {
+  if (!user || !t) return false;
+  if (t.estado !== 'cerrada' && t.estado !== 'resuelta') return false;
+  if (user.rol === 'superAdmin' || user.rol === 'coordinador') return true;
+  if (user.rol === 'reportante' && t.reportante?.usuarioId === user.id) return true;
+  return false;
+}
+
+function canAttach(t) {
+  return !!user && user.rol !== 'directivo';
+}
+
+// -------------------------------------------------------------
+// COMPONENTES DE UI
+// -------------------------------------------------------------
+function badge(s) {
+  const norm = (s || '').toLowerCase();
+  const isAttention = norm === 'en proceso' || norm === 'en espera' || norm === 'en_atencion';
+  const isResolved = norm === 'resuelta' || norm === 'cerrada';
+  return '<span class="badge ' + (isAttention ? 'attention' : isResolved ? 'resolved' : '') + '">' + esc(STATUS[norm] || s) + '</span>';
+}
+
+function tag(t, click = false, active = false) {
+  return click
+    ? '<button type="button" class="tag ' + (active ? 'active' : '') + '" data-action="filter-tag" data-tag="' + esc(t) + '">#' + esc(t) + '</button>'
+    : '<span class="tag">#' + esc(t) + '</span>';
+}
+
+function field(id, label, value = '', opts = {}) {
+  const error = errors[id];
+  const optional = opts.optional ? ' <span class="opt">Opcional</span>' : ' *';
+  let control = '';
+
+  if (opts.options) {
+    control = '<select id="' + id + '" name="' + id + '" ' + (error ? 'aria-invalid="true" class="invalid"' : '') + '>' +
+      '<option value="">' + esc(opts.placeholder || 'Selecciona una opción') + '</option>' +
+      opts.options.map(o => {
+        const [v, l] = Array.isArray(o) ? o : [o, o];
+        return '<option value="' + esc(v) + '" ' + (String(value) === String(v) ? 'selected' : '') + '>' + esc(l) + '</option>';
+      }).join('') +
+      '</select>';
+  } else if (opts.textarea) {
+    control = '<textarea id="' + id + '" name="' + id + '" maxlength="' + (opts.maxlength || 2000) + '" placeholder="' + esc(opts.placeholder || 'Escribe la información') + '" ' + (error ? 'aria-invalid="true" class="invalid"' : '') + '>' + esc(value) + '</textarea>';
+  } else {
+    control = '<input id="' + id + '" name="' + id + '" type="' + (opts.type || 'text') + '" ' +
+      (opts.type === 'number' ? 'min="0" step="' + (opts.step || '1') + '"' : '') +
+      ' maxlength="' + (opts.maxlength || 160) + '" autocomplete="' + (opts.autocomplete || 'off') + '" value="' + esc(value) + '" placeholder="' + esc(opts.placeholder || 'Escribe la información') + '" ' + (error ? 'aria-invalid="true" class="invalid"' : '') + '>';
+  }
+
+  return '<div class="field ' + (opts.full ? 'full' : '') + '">' +
+    '<label for="' + id + '">' + label + optional + '</label>' +
+    control +
+    (opts.help ? '<p class="help">' + esc(opts.help) + '</p>' : '') +
+    (error ? '<p class="field-error" id="err-' + id + '">' + esc(error) + '</p>' : '') +
+    '</div>';
+}
+
+function errorBox() {
+  const all = Object.values(errors);
+  return all.length
+    ? '<div class="errorbox" role="alert" tabindex="-1" id="validation-summary"><strong>Revisa ' + (all.length === 1 ? 'este campo' : 'estos campos') + ' antes de continuar</strong><ul>' + all.map(s => '<li>' + esc(s) + '</li>').join('') + '</ul></div>'
+    : '';
+}
+
+function focusError() {
+  const id = Object.keys(errors)[0];
+  const el = $(id) || $('validation-summary');
+  el?.focus();
+  el?.scrollIntoView?.({ block: 'center', behavior: 'smooth' });
+}
+
+function btn(label, action, cls = '', extra = '') {
+  return '<button type="button" class="' + cls + '" data-action="' + action + '" ' + extra + ' ' + (busy ? 'disabled' : '') + '>' + label + '</button>';
+}
+
+function ticketCard(t) {
+  const id = t.id || t._id;
+  const area = t.ubicacion ? t.ubicacion.edificio + ' / ' + t.ubicacion.area : '';
+  const tech = t.tecnicoAsignado ? t.tecnicoAsignado.nombre : 'Sin asignar';
+  const tagsList = t.tags || [];
+
+  return '<article class="card ticket">' +
+    '<div class="row between">' +
+      '<div>' +
+        '<h3>' + esc(t.titulo) + '</h3>' +
+        '<div class="ticket-meta">' + esc(t.codigo) + ' · ' + esc(CATS[t.categoria] || t.categoria) + ' · ' + esc(area) + ' · Resp: ' + esc(tech) + '</div>' +
+      '</div>' +
+      '<div class="row">' +
+        badge(t.estado) +
+        '<button class="ghost" data-action="detail" data-id="' + esc(id) + '">Ver expediente →</button>' +
+      '</div>' +
+    '</div>' +
+    '<div class="tags" style="margin-top:12px">' +
+      tagsList.map(item => tag(item)).join('') +
+    '</div>' +
+  '</article>';
+}
+
+function metricCards(data) {
+  const openCount = data.filter(t => t.estado === 'abierta').length;
+  const inProgressCount = data.filter(t => t.estado === 'en proceso' || t.estado === 'en espera').length;
+  const resolvedCount = data.filter(t => t.estado === 'resuelta' || t.estado === 'cerrada').length;
+
+  return '<div class="metrics">' +
+    '<div class="card metric"><div class="eyebrow">Pendientes</div><div class="number">' + openCount + '</div><span class="help">Estado abierta</span></div>' +
+    '<div class="card metric"><div class="eyebrow">En atención</div><div class="number">' + inProgressCount + '</div><span class="help">En proceso o espera</span></div>' +
+    '<div class="card metric"><div class="eyebrow">Resueltas</div><div class="number green">' + resolvedCount + '</div><span class="help">Resueltas o cerradas</span></div>' +
+  '</div>';
+}
+
+function shell(title, subtitle, content, action = '') {
+  if (!user) return login();
+
+  const links = [
+    ['dashboard', 'Resumen'],
+    ['list', is('tecnico') ? 'Mis asignaciones' : 'Incidencias'],
+    ...(canCreate() ? [['create', 'Crear incidencia']] : []),
+    ...(is('coordinador') || is('superAdmin') ? [['assignments', 'Administración del área']] : []),
+    ...(!is('reportante') ? [['analytics', 'Analítica']] : []),
+    ...(is('superAdmin') ? [['users', 'Usuarios']] : [])
+  ];
+
+  app.innerHTML = '<div class="layout">' +
+    '<aside class="sidebar">' +
+      brand() +
+      '<div><div class="eyebrow" style="margin-bottom:12px">Espacio de trabajo</div><div class="role">' + esc(roleLabel()) + '</div></div>' +
+      '<nav>' +
+        links.map(([a, l]) => '<button class="' + (screen === a ? 'active' : '') + '" data-action="' + a + '">' + l + '</button>').join('') +
+      '</nav>' +
+      '<footer>' +
+        '<div><div class="userName">' + esc(user.nombre) + '</div><div class="small muted">' + esc(scope()) + '</div></div>' +
+        btn('Cerrar sesión', 'logout', 'ghost') +
+      '</footer>' +
+    '</aside>' +
+    '<main class="main">' +
+      '<div class="topbar">' +
+        '<span class="eyebrow">UTM DESK / ' + esc(roleLabel()) + '</span>' +
+        '<span class="small muted">' + esc(scope()) + '</span>' +
+        btn('Salir', 'logout', 'ghost mobile-exit') +
+      '</div>' +
+      '<div class="heading">' +
+        '<div><h1>' + esc(title) + '</h1><p>' + esc(subtitle) + '</p></div>' +
+        action +
+      '</div>' +
+      (notice ? '<div class="notice" role="status">' + esc(notice) + '</div>' : '') +
+      content +
+    '</main>' +
+  '</div>';
+}
+
+// -------------------------------------------------------------
+// PANTALLAS: HOME Y LOGIN
+// -------------------------------------------------------------
+function home() {
+  screen = 'home';
+  app.innerHTML = '<section class="public">' +
+    '<header class="publicnav">' +
+      brand() +
+      '<span class="eyebrow">Campus operations</span>' +
+      btn('Acceder →', 'login') +
+    '</header>' +
+    '<div class="hero">' +
+      '<div>' +
+        '<span class="role">Un campus mejor conectado</span>' +
+        '<h1>Cada incidencia.<br>Un paso hacia<br><em>la solución.</em></h1>' +
+        '<p>Reporta, organiza y da seguimiento a las incidencias de tu campus. La información correcta, en manos del equipo correcto.</p>' +
+        btn('Entrar a UTM Desk →', 'login') +
+        '<p class="help" style="margin-top:20px">Acceso por cuenta · Permisos por rol · Conectado con API y MongoDB Atlas</p>' +
+      '</div>' +
+      '<div class="card flow">' +
+        '<div class="eyebrow">Un flujo claro de principio a fin</div>' +
+        [['01', 'Registra el ticket', 'Descripción y evidencias, en un solo formulario.'],
+         ['02', 'Asigna al equipo', 'El coordinador administra la atención del área.'],
+         ['03', 'Da seguimiento', 'El técnico registra avances y horas de trabajo.'],
+         ['04', 'Consulta resultados', 'Estado, historial e indicadores según tu perfil.']].map(([n, t, d]) =>
+          '<div class="row"><span class="index">' + n + '</span><div><h3>' + t + '</h3><p class="small">' + d + '</p></div></div>'
+        ).join('') +
+      '</div>' +
+    '</div>' +
+    '<div class="featuregrid">' +
+      [['Cómputo y redes', 'Equipos, conectividad y telecomunicaciones.'],
+       ['Infraestructura', 'Instalaciones, reparaciones y mantenimiento.'],
+       ['Servicios académicos', 'Plataformas, cursos y acceso a servicios.']].map(([t, d]) =>
+        '<article class="card"><h2>' + t + '</h2><p>' + d + '</p></article>'
+      ).join('') +
+    '</div>' +
+    '<p class="help" style="margin-top:25px">UTM Desk NoSQL Cloud · API activa en: <code>' + (API_BASE || 'mismo servidor') + '</code></p>' +
+  '</section>';
+}
+
+function login(email = '') {
+  screen = 'login';
+  app.innerHTML = '<section class="auth-screen">' +
+    btn('← Volver al inicio', 'home', 'ghost auth-back') +
+    '<div class="auth-panel">' +
+      '<div class="auth-brand">' + brand() + '</div>' +
+      '<h1 class="auth-title">¡Hola de<br>nuevo!</h1>' +
+      '<p class="auth-description">Inicia sesión para entrar a tu espacio de trabajo.</p>' +
+      '<form class="loginform auth-form" id="loginform" novalidate>' +
+        errorBox() +
+        field('email', 'Correo electrónico', email, { type: 'email', autocomplete: 'username', placeholder: 'correo@ejemplo.com' }) +
+        '<div class="auth-password">' +
+          field('password', 'Contraseña', '', { type: 'password', autocomplete: 'current-password', placeholder: 'Escribe tu contraseña' }) +
+          '<button class="password-toggle" type="button" data-action="toggle-password" aria-label="Mostrar contraseña" aria-pressed="false">Mostrar</button>' +
+        '</div>' +
+        '<button type="submit" class="auth-submit" ' + (busy ? 'disabled' : '') + '>' + (busy ? 'Validando acceso…' : 'Continuar') + '</button>' +
+      '</form>' +
+      '<p class="auth-note">Acceso seguro con JWT y contraseñas cifradas.<br>Introduce las credenciales de tu cuenta universitaria.</p>' +
+    '</div>' +
+  '</section>';
+}
+
+function logout(customNotice = '') {
+  sessionStorage.removeItem('utm_token');
+  localStorage.removeItem('utm_token');
+  user = null;
+  selected = null;
+  selectedTicket = null;
+  tickets = [];
+  draft = null;
+  workDraft = null;
+  assignDraft = null;
+  files = [];
+  completion = null;
+  errors = {};
+  notice = customNotice;
+  query = '';
+  filterTags = [];
+  login();
+}
+
+// -------------------------------------------------------------
+// PANTALLAS: DASHBOARD Y LISTADO
+// -------------------------------------------------------------
+async function dashboard() {
+  screen = 'dashboard';
+  errors = {};
+  busy = true;
+
+  try {
+    const res = await api('/api/incidencias?pagina=1&tamanoPagina=50');
+    tickets = res.elementos || [];
+    totalTickets = res.total || 0;
+  } catch (err) {
+    notice = 'Error al cargar datos: ' + err.message;
+    tickets = [];
+  } finally {
+    busy = false;
+  }
+
+  const title = {
+    reportante: 'Tus reportes, bajo control',
+    tecnico: 'Tu jornada de atención',
+    coordinador: 'Control del área',
+    directivo: 'Visión del campus',
+    superAdmin: 'Panel de Administración Global'
+  }[user.rol] || 'Espacio de trabajo';
+
+  const subtitle = {
+    reportante: 'Registra un problema y acompaña su solución.',
+    tecnico: 'Consulta tu carga de trabajo y registra avances en tus asignaciones.',
+    coordinador: 'Distribuye la atención de ' + (CATS[user.area] || user.area || 'tu área') + ' y supervisa el seguimiento.',
+    directivo: 'Consulta incidencias e indicadores sin modificar la operación.',
+    superAdmin: 'Supervisión total y gestión integral del sistema UTM Desk.'
+  }[user.rol] || '';
+
+  let extra = '';
+  if (is('coordinador') || is('superAdmin')) {
+    const sinTecnico = tickets.filter(t => !t.tecnicoAsignado && t.estado !== 'cerrada');
+    if (sinTecnico.length > 0) {
+      extra = '<div class="notice"><div class="row between">' +
+        '<span><strong>' + sinTecnico.length + '</strong> incidencias pendientes de asignación en tu área.</span>' +
+        btn('Administrar asignaciones', 'assignments', 'secondary') +
+      '</div></div>';
+    }
+  }
+
+  const content = metricCards(tickets) + extra +
+    '<section class="card">' +
+      '<div class="cardtitle"><h2>Actividad reciente</h2>' + btn('Ver todas', 'list', 'ghost') + '</div>' +
+      '<div class="stack">' +
+        (tickets.length ? tickets.slice(0, 5).map(ticketCard).join('') : '<p class="muted">No hay incidencias registradas en este alcance.</p>') +
+      '</div>' +
+    '</section>';
+
+  shell(title, subtitle, content, canCreate() ? btn('+ Crear incidencia', 'create') : '');
+}
+
+async function list() {
+  screen = 'list';
+  errors = {};
+  busy = true;
+
+  let queryUrl = '/api/incidencias?pagina=' + page + '&tamanoPagina=' + pageSize;
+  if (query.trim()) queryUrl += '&texto=' + encodeURIComponent(query.trim());
+  if (filterTags.length > 0) queryUrl += '&tag=' + encodeURIComponent(filterTags[0]);
+  if (filterEstado) queryUrl += '&estado=' + encodeURIComponent(filterEstado);
+  if (filterCategoria) queryUrl += '&categoria=' + encodeURIComponent(filterCategoria);
+
+  try {
+    const res = await api(queryUrl);
+    tickets = res.elementos || [];
+    totalTickets = res.total || 0;
+  } catch (err) {
+    notice = 'Error al cargar incidencias: ' + err.message;
+    tickets = [];
+  } finally {
+    busy = false;
+  }
+
+  // Extraer tags únicos para filtrar
+  const tagsSet = new Set();
+  tickets.forEach(t => (t.tags || []).forEach(x => tagsSet.add(x)));
+  const tags = [...tagsSet];
+
+  const totalPages = Math.max(1, Math.ceil(totalTickets / pageSize));
+
+  const filterForm = '<section class="card" style="margin-bottom:22px">' +
+    '<form id="searchform" class="filters">' +
+      '<input id="query" name="query" aria-label="Buscar incidencias" type="search" placeholder="Buscar por palabras clave en título o descripción…" value="' + esc(query) + '">' +
+      '<select id="filterEstado" style="max-width:160px">' +
+        '<option value="">Todos los estados</option>' +
+        STATUSES.map(s => '<option value="' + esc(s) + '" ' + (filterEstado === s ? 'selected' : '') + '>' + esc(STATUS[s]) + '</option>').join('') +
+      '</select>' +
+      '<select id="filterCategoria" style="max-width:180px">' +
+        '<option value="">Todas las categorías</option>' +
+        Object.entries(CATS).map(([k, v]) => '<option value="' + esc(k) + '" ' + (filterCategoria === k ? 'selected' : '') + '>' + esc(v) + '</option>').join('') +
+      '</select>' +
+      '<button type="submit">Buscar</button>' +
+      btn('Limpiar', 'clear-filters', 'ghost') +
+    '</form>' +
+    (tags.length ? '<div class="tags" style="margin-top:12px">' + tags.map(t => tag(t, true, filterTags.includes(t))).join('') + '</div>' : '') +
+    '<p class="help" style="margin-top:10px">Se filtran registros dentro de tu alcance autorizado en MongoDB Atlas.</p>' +
+  '</section>';
+
+  const paginationControls = totalPages > 1 ? '<div class="row between" style="margin-top:20px;padding:12px 0">' +
+    '<span class="small muted">Página ' + page + ' de ' + totalPages + ' (' + totalTickets + ' resultados)</span>' +
+    '<div class="row">' +
+      (page > 1 ? btn('← Anterior', 'prev-page', 'ghost') : '') +
+      (page < totalPages ? btn('Siguiente →', 'next-page', 'ghost') : '') +
+    '</div>' +
+  '</div>' : '';
+
+  const listContent = filterForm +
+    '<p class="small muted" style="margin-bottom:14px">' + totalTickets + ' resultados encontrados · ' + esc(scope()) + '</p>' +
+    '<div class="stack">' +
+      (tickets.length ? tickets.map(ticketCard).join('') : '<div class="card empty"><h2>No hay incidencias que coincidan</h2><p>Prueba con otros términos de búsqueda o elimina los filtros.</p></div>') +
+    '</div>' +
+    paginationControls;
+
+  shell(
+    is('tecnico') ? 'Mis asignaciones' : 'Listado de Incidencias',
+    'Busca y consulta el expediente completo de cada reporte.',
+    listContent,
+    canCreate() ? btn('+ Crear incidencia', 'create') : ''
+  );
+}
+
+// -------------------------------------------------------------
+// PANTALLAS: CREAR INCIDENCIA
+// -------------------------------------------------------------
+function newDraft() {
+  return {
+    categoria: is('coordinador') ? user.area : '',
+    titulo: '',
+    descripcion: '',
+    edificio: '',
+    area: '',
+    prioridad: 'media',
+    tags: [],
+    detalle: {}
+  };
+}
+
+function beginCreate() {
+  if (!canCreate()) return denied();
+  draft = newDraft();
+  files = [];
+  errors = {};
+  notice = '';
+  create();
+}
+
+function readCreate(form) {
+  const d = new FormData(form);
+  for (const k of ['categoria', 'titulo', 'descripcion', 'edificio', 'area', 'prioridad']) {
+    draft[k] = String(d.get(k) || '');
+  }
+  for (const [key] of SPEC[draft.categoria] || []) {
+    draft.detalle[key] = String(d.get(key) || '');
+  }
+}
+
+function tagEditor(tagsList) {
+  return '<div class="tags">' +
+    tagsList.map(t => '<span class="tag">#' + esc(t) + '<button type="button" aria-label="Quitar ' + esc(t) + '" data-action="remove-tag" data-tag="' + esc(t) + '">×</button></span>').join('') +
+  '</div>' +
+  '<div class="row" style="margin-top:12px">' +
+    '<input id="taginput" aria-label="Nueva etiqueta" placeholder="Escribe una etiqueta y pulsa Enter" style="flex:1">' +
+    '<button type="button" class="secondary" data-action="add-tag">+ Añadir</button>' +
+  '</div>' +
+  '<p class="help">Etiquetas descriptivas para clasificación y búsqueda rápida.</p>';
+}
+
+function fileEditor() {
+  return '<label for="files">Evidencias <span class="opt">Opcionales</span></label>' +
+    '<input id="files" type="file" accept="image/jpeg,image/png,application/pdf" multiple aria-describedby="file-help ' + (errors.files ? 'err-files' : '') + '" ' + (errors.files ? 'aria-invalid="true"' : '') + '>' +
+    '<p class="help" id="file-help">JPG, PNG o PDF · Hasta 5 MB por archivo. Se subirán al almacenamiento privado en Supabase.</p>' +
+    (errors.files ? '<p class="field-error" id="err-files">' + esc(errors.files) + '</p><button type="button" class="link" data-action="clear-file-error">Descartar selección</button>' : '') +
+    files.map((f, i) =>
+      '<div class="fileitem"><span>' + esc(f.name) + ' · ' + (f.size / 1024).toFixed(0) + ' KB</span><button type="button" class="ghost" data-action="remove-file" data-index="' + i + '">Quitar</button></div>'
+    ).join('');
+}
+
+function create() {
+  if (!canCreate()) return dashboard();
+  screen = 'create';
+  if (!draft) draft = newDraft();
+
+  const catOptions = Object.entries(CATS).filter(([k]) => !is('coordinador') || k === user.area);
+  const specs = SPEC[draft.categoria] || [];
+
+  const content = '<div class="split">' +
+    '<form id="createform" class="card" novalidate>' +
+      errorBox() +
+      '<section class="section">' +
+        '<h2><span class="step">01</span>Información del reporte</h2>' +
+        '<div class="formgrid">' +
+          field('categoria', 'Categoría', draft.categoria, { options: catOptions }) +
+          field('prioridad', 'Prioridad', draft.prioridad, { options: [['baja', 'Baja'], ['media', 'Media'], ['alta', 'Alta'], ['urgente', 'Urgente']] }) +
+          field('titulo', 'Título', draft.titulo, { full: true, placeholder: 'Resume brevemente qué sucede (ej. Aire acondicionado no enfría)' }) +
+          field('descripcion', 'Descripción detallada', draft.descripcion, { full: true, textarea: true, placeholder: 'Explica qué ocurre, desde cuándo y qué impacto tiene en las actividades...' }) +
+          field('edificio', 'Edificio', draft.edificio, { placeholder: 'Ej. Edificio B' }) +
+          field('area', 'Área o espacio específico', draft.area, { placeholder: 'Ej. Laboratorio 3, Aula 4, Pasillo norte' }) +
+        '</div>' +
+      '</section>' +
+      (specs.length
+        ? '<section class="section"><h2><span class="step">02</span>Datos técnicos de ' + esc(CATS[draft.categoria].toLowerCase()) + '</h2><div class="formgrid">' +
+          specs.map(([k, l, req, options]) => field(k, l, draft.detalle[k] || '', {
+            optional: !req,
+            options,
+            type: k === 'estudiantes_afectados' ? 'number' : 'text',
+            placeholder: k === 'insumos_requeridos' ? 'Indica qué refacciones o insumos se necesitan' : 'Escribe el valor'
+          })).join('') +
+          '</div></section>'
+        : '<div class="categoryhint small muted">Selecciona una categoría arriba para mostrar los atributos específicos del reporte.</div>') +
+      '<section class="section">' +
+        '<h2><span class="step">' + (specs.length ? '03' : '02') + '</span>Etiquetas y evidencias</h2>' +
+        tagEditor(draft.tags) +
+        '<div style="margin-top:22px">' + fileEditor() + '</div>' +
+      '</section>' +
+      '<footer class="formfooter">' +
+        '<span class="help">Se generará un folio único automático y el estado inicial Abierta.</span>' +
+        '<div class="row">' +
+          btn('Cancelar', 'list', 'ghost') +
+          '<button type="submit" ' + (busy ? 'disabled' : '') + '>' + (busy ? 'Guardando en MongoDB Atlas…' : 'Crear incidencia →') + '</button>' +
+        '</div>' +
+      '</footer>' +
+    '</form>' +
+    '<aside class="guidance">' +
+      '<section class="card">' +
+        '<div class="eyebrow">Guía de captura</div>' +
+        '<h2 style="margin:12px 0">Reportes claros, soluciones rápidas</h2>' +
+        '<ul>' +
+          '<li>Describe el síntoma exacto y la ubicación precisa.</li>' +
+          '<li>Adjunta fotos o diagnósticos en PDF si facilitan la atención.</li>' +
+          '<li>El coordinador asignará al técnico responsable de inmediato.</li>' +
+        '</ul>' +
+      '</section>' +
+    '</aside>' +
+  '</div>';
+
+  shell('Crear nueva incidencia', 'Registra los datos para que el área correspondiente pueda atender el caso.', content);
+}
+
+function validateCreate(d) {
+  const e = {};
+  if (!String(d.categoria || '').trim()) e.categoria = 'Selecciona la categoría.';
+  if (!String(d.prioridad || '').trim()) e.prioridad = 'Selecciona la prioridad.';
+  if (!String(d.titulo || '').trim()) e.titulo = 'Escribe un título para la incidencia.';
+  if (!String(d.descripcion || '').trim()) e.descripcion = 'Describe el problema con suficiente detalle.';
+  if (!String(d.edificio || '').trim()) e.edificio = 'Indica el edificio.';
+  if (!String(d.area || '').trim()) e.area = 'Indica el área o espacio.';
+
+  for (const [k, l, req, options] of SPEC[d.categoria] || []) {
+    const val = String(d.detalle[k] || '').trim();
+    if (req && !val) {
+      e[k] = 'Completa el campo requerido: ' + l + '.';
+    }
+  }
+  return e;
+}
+
+// -------------------------------------------------------------
+// PANTALLAS: EXPEDIENTE Y DETALLE
+// -------------------------------------------------------------
+async function detail(id) {
+  if (!id) return list();
+  selected = id;
+  screen = 'detail';
+  errors = {};
+  busy = true;
+
+  try {
+    const [tData, evData] = await Promise.all([
+      api('/api/incidencias/' + id),
+      api('/api/incidencias/' + id + '/evidencias').catch(() => [])
+    ]);
+    selectedTicket = tData;
+    ticketEvidence = evData || [];
+  } catch (err) {
+    notice = 'Error al cargar expediente: ' + err.message;
+    return list();
+  } finally {
+    busy = false;
+  }
+
+  const t = selectedTicket;
+  const area = t.ubicacion ? t.ubicacion.edificio + ' / ' + t.ubicacion.area : 'No especificada';
+  const tech = t.tecnicoAsignado ? t.tecnicoAsignado.nombre : 'Sin asignar';
+
+  // Mapeo dinámico del detalle específico polimórfico
+  const detEntries = Object.entries(t.detalleEspecifico || {});
+  const specsConfig = SPEC[t.categoria] || [];
+
+  const specificHtml = detEntries.length
+    ? '<dl class="stack" style="margin-top:16px">' +
+      detEntries.map(([k, v]) => {
+        const found = specsConfig.find(item => item[0] === k);
+        const label = found ? found[1] : k;
+        let formatted = v;
+        if (typeof v === 'boolean') formatted = v ? 'Sí' : 'No';
+        if (Array.isArray(v)) formatted = v.join(', ');
+        return '<div class="detail"><dt>' + esc(label) + '</dt><dd>' + esc(formatted || 'No especificado') + '</dd></div>';
+      }).join('') +
+      '</dl>'
+    : '<p class="small muted" style="margin-top:14px">Sin campos específicos registrados.</p>';
+
+  const evidenceHtml = ticketEvidence.length
+    ? ticketEvidence.map((ev, i) =>
+        '<div class="fileitem">' +
+          '<div>' +
+            '<strong>' + esc(ev.nombreArchivo) + '</strong>' +
+            '<div class="small muted">' + (ev.tamanoBytes / 1024).toFixed(0) + ' KB · Subido por ' + esc(ev.nombreUsuario || 'Usuario') + '</div>' +
+          '</div>' +
+          (ev.urlTemporal ? '<a href="' + esc(ev.urlTemporal) + '" target="_blank" rel="noopener" class="ghost" style="text-decoration:none;padding:8px 12px;border:1px solid var(--line);border-radius:8px">Abrir evidencia ↗</a>' : '') +
+        '</div>'
+      ).join('')
+    : '<p class="small muted">No hay evidencias adjuntas en el bucket de Supabase.</p>';
+
+  const content = '<div class="split">' +
+    '<div class="stack">' +
+      '<section class="card">' +
+        '<div class="cardtitle"><h2>Resumen de la incidencia</h2>' + badge(t.estado) + '</div>' +
+        '<p style="white-space:pre-wrap;color:var(--text);font-size:15px;line-height:1.6">' + esc(t.descripcion) + '</p>' +
+        '<dl class="detailgrid" style="margin:24px 0 0">' +
+          [['Folio', t.codigo],
+           ['Categoría', CATS[t.categoria] || t.categoria],
+           ['Ubicación', area],
+           ['Prioridad', t.prioridad?.toUpperCase()],
+           ['Reportante', t.reportante ? t.reportante.nombre + ' (' + (t.reportante.tipo || 'Usuario') + ')' : 'Anónimo'],
+           ['Técnico asignado', tech],
+           ['Horas invertidas', (t.horasInvertidas || 0) + ' h'],
+           ['Fecha reporte', new Date(t.fechaCreacion).toLocaleString('es-MX')]].map(([a, b]) =>
+            '<div class="detail"><dt>' + esc(a) + '</dt><dd>' + esc(b) + '</dd></div>'
+          ).join('') +
+        '</dl>' +
+        '<div class="tags" style="margin-top:20px">' + (t.tags || []).map(x => tag(x)).join('') + '</div>' +
+      '</section>' +
+      '<section class="card">' +
+        '<div class="cardtitle"><h2>Evidencias multimedia</h2><span class="small muted">' + ticketEvidence.length + ' archivos</span></div>' +
+        evidenceHtml +
+      '</section>' +
+    '</div>' +
+    '<aside class="stack">' +
+      '<section class="card">' +
+        '<h2>Acciones</h2>' +
+        '<div class="stack" style="margin-top:20px">' +
+          (canWork(t) ? btn('Registrar seguimiento / horas', 'work') : '') +
+          (canAssign(t) ? btn('Asignar o reasignar técnico', 'assign', 'secondary') : '') +
+          (canAttach(t) ? btn('Adjuntar evidencia', 'attach', 'ghost') : '') +
+          (canClose(t) ? btn('Cerrar incidencia', 'close-ticket', 'ghost') : '') +
+          (canReopen(t) ? btn('Reabrir incidencia', 'reopen-ticket', 'ghost') : '') +
+          btn('Ver bitácora de historial', 'history', 'ghost') +
+          btn('← Volver a incidencias', 'list', 'ghost') +
+        '</div>' +
+        (is('directivo') ? '<p class="help" style="margin-top:14px">Vista de solo lectura asignada a directivos.</p>' : '') +
+      '</section>' +
+      '<section class="card">' +
+        '<h3>Datos específicos (' + esc(CATS[t.categoria] || t.categoria) + ')</h3>' +
+        specificHtml +
+      '</section>' +
+    '</aside>' +
+  '</div>';
+
+  shell(t.titulo, t.codigo + ' · ' + (CATS[t.categoria] || t.categoria), content, canWork(t) ? btn('Atender incidencia', 'work') : '');
+}
+
+// -------------------------------------------------------------
+// PANTALLAS: HISTORIAL, ASIGNACIÓN, SEGUIMIENTO Y EVIDENCIAS
+// -------------------------------------------------------------
+function history() {
+  const t = selectedTicket;
+  if (!t) return list();
+  screen = 'history';
+
+  const items = [...(t.historialSeguimiento || [])].reverse();
+
+  const content = '<section class="card">' +
+    '<div class="timeline">' +
+      (items.length
+        ? items.map(h =>
+            '<article class="event">' +
+              '<div class="row between">' +
+                '<h3>' + esc(h.accion?.replace(/_/g, ' ')?.toUpperCase()) + '</h3>' +
+                '<span class="help">' + esc(new Date(h.fecha).toLocaleString('es-MX')) + '</span>' +
+              '</div>' +
+              '<p style="margin:8px 0;font-size:14px">' + esc(h.comentario) + '</p>' +
+              '<div class="row" style="margin-top:12px">' +
+                (h.estadoNuevo ? badge(h.estadoNuevo) : '') +
+                '<span class="small muted">' + esc(h.nombreUsuario || 'Sistema') + ' · +' + (h.horasTrabajadas || 0) + ' h' + (h.visibilidad === 'interna' ? ' · (Interno)' : '') + '</span>' +
+              '</div>' +
+            '</article>'
+          ).join('')
+        : '<p class="muted">No hay eventos en el historial.</p>') +
+    '</div>' +
+  '</section>';
+
+  shell('Historial de seguimiento', t.codigo + ' · ' + t.titulo, content, btn('← Expediente', 'back-detail', 'ghost'));
+}
+
+async function beginAssign() {
+  const t = selectedTicket;
+  if (!canAssign(t)) return denied();
+  assignDraft = { tecnicoId: t.tecnicoAsignado?.usuarioId || '' };
+  errors = {};
+  busy = true;
+
+  try {
+    techniciansCache = await api('/api/usuarios/tecnicos');
+  } catch (err) {
+    techniciansCache = [];
+  } finally {
+    busy = false;
+  }
+  assign();
+}
+
+function assign() {
+  const t = selectedTicket;
+  if (!canAssign(t)) return denied();
+  screen = 'assign';
+
+  // Filtrar técnicos por especialidad o área si aplica
+  let techs = techniciansCache;
+  if (is('coordinador') && user.area) {
+    const areaNorm = normalize(user.area);
+    techs = techniciansCache.filter(tech => {
+      const esp = normalize(tech.especialidad || tech.area || '');
+      return !esp || esp.includes(areaNorm) || areaNorm.includes(esp);
+    });
+    if (!techs.length) techs = techniciansCache; // fallback
+  }
+
+  const techOptions = techs.map(x => [x.id, x.nombre + (x.especialidad ? ' (' + x.especialidad + ')' : '')]);
+
+  const content = '<div class="split">' +
+    '<form class="card" id="assignform" novalidate>' +
+      errorBox() +
+      '<div class="stack">' +
+        field('tecnicoId', 'Técnico responsable', assignDraft.tecnicoId, { options: techOptions, placeholder: 'Selecciona al técnico' }) +
+      '</div>' +
+      '<footer class="formfooter">' +
+        btn('Cancelar', 'back-detail', 'ghost') +
+        '<button type="submit" ' + (busy ? 'disabled' : '') + '>' + (busy ? 'Guardando…' : 'Confirmar asignación →') + '</button>' +
+      '</footer>' +
+    '</form>' +
+    '<aside class="card">' +
+      '<span class="role">Control de Coordinación</span>' +
+      '<h2 style="margin-top:18px">Asignación controlada</h2>' +
+      '<p class="small" style="margin-top:14px">Responsable actual: ' + esc(t.tecnicoAsignado?.nombre || 'Sin asignar') + '</p>' +
+      '<p class="help">La asignación queda registrada en la bitácora de auditoría y notifica la carga de trabajo del técnico.</p>' +
+    '</aside>' +
+  '</div>';
+
+  shell('Asignar responsable técnico', t.codigo + ' · ' + t.titulo, content);
+}
+
+function beginWork() {
+  const t = selectedTicket;
+  if (!canWork(t)) return denied();
+  workDraft = {
+    estadoNuevo: t.estado === 'abierta' ? 'en proceso' : t.estado,
+    horasTrabajadas: 0,
+    comentario: '',
+    visibilidad: 'publica'
+  };
+  files = [];
+  errors = {};
+  work();
+}
+
+function work() {
+  const t = selectedTicket;
+  if (!canWork(t)) return denied();
+  screen = 'work';
+
+  const statusOpts = WORK_STATUSES.map(s => [s, STATUS[s]]);
+
+  const content = '<div class="split">' +
+    '<form class="card" id="workform" novalidate>' +
+      errorBox() +
+      '<div class="formgrid">' +
+        field('estadoNuevo', 'Nuevo estado de la incidencia', workDraft.estadoNuevo, { options: statusOpts }) +
+        field('horasTrabajadas', 'Horas dedicadas en esta intervención', workDraft.horasTrabajadas, { type: 'number', step: '0.25', help: 'Se sumarán a las horas invertidas en el ticket.' }) +
+        field('visibilidad', 'Visibilidad del comentario', workDraft.visibilidad, { options: [['publica', 'Pública (visible para reportante)'], ['interna', 'Interna (solo equipo técnico)']], full: true }) +
+        field('comentario', 'Comentario de la intervención realizada', workDraft.comentario, { textarea: true, full: true, placeholder: 'Describe las pruebas realizadas, piezas cambiadas o la solución aplicada (mínimo 10 caracteres)...' }) +
+      '</div>' +
+      '<section class="section">' +
+        '<h2>Evidencias de la intervención</h2>' +
+        fileEditor() +
+      '</section>' +
+      '<footer class="formfooter">' +
+        btn('Cancelar', 'back-detail', 'ghost') +
+        '<button type="submit" ' + (busy ? 'disabled' : '') + '>' + (busy ? 'Actualizando ticket…' : 'Guardar seguimiento →') + '</button>' +
+      '</footer>' +
+    '</form>' +
+    '<aside class="card">' +
+      '<div class="eyebrow">Estado actual</div>' +
+      '<h2 style="margin-top:12px">' + esc(t.titulo) + '</h2>' +
+      '<div class="divider"></div>' +
+      '<p class="small">Estado actual: ' + esc(STATUS[t.estado] || t.estado) + '</p>' +
+      '<p class="small">Horas acumuladas: ' + (t.horasInvertidas || 0) + ' h</p>' +
+      '<p class="small">Técnico: ' + esc(t.tecnicoAsignado?.nombre || 'Sin asignar') + '</p>' +
+      '<div class="divider"></div>' +
+      '<p class="help">Si cambias el estado a "Resuelta", se registrará la fecha de resolución para el ciclo de retención TTL de 60 días en MongoDB Atlas.</p>' +
+    '</aside>' +
+  '</div>';
+
+  shell('Registrar seguimiento técnico', t.codigo + ' · ' + t.titulo, content);
+}
+
+function beginClose() {
+  const t = selectedTicket;
+  if (!canClose(t)) return denied();
+  closeDraft = { comentario: '' };
+  errors = {};
+  screen = 'close';
+
+  const content = '<div class="split">' +
+    '<form class="card" id="closeform" novalidate>' +
+      errorBox() +
+      '<p style="margin-bottom:18px">Indica el motivo de cierre definitivo de esta incidencia.</p>' +
+      field('comentario', 'Comentario de cierre', '', { textarea: true, full: true, placeholder: 'Explica por qué se da por cerrada la incidencia (mínimo 10 caracteres)...' }) +
+      '<footer class="formfooter">' +
+        btn('Cancelar', 'back-detail', 'ghost') +
+        '<button type="submit" ' + (busy ? 'disabled' : '') + '>' + (busy ? 'Cerrando…' : 'Confirmar cierre →') + '</button>' +
+      '</footer>' +
+    '</form>' +
+  '</div>';
+
+  shell('Cerrar incidencia', t.codigo + ' · ' + t.titulo, content);
+}
+
+function beginReopen() {
+  const t = selectedTicket;
+  if (!canReopen(t)) return denied();
+  reopenDraft = { motivo: '' };
+  errors = {};
+  screen = 'reopen';
+
+  const content = '<div class="split">' +
+    '<form class="card" id="reopenform" novalidate>' +
+      errorBox() +
+      '<p style="margin-bottom:18px">Si la falla persiste o requiere mayor atención, introduce el motivo de la reapertura.</p>' +
+      field('motivo', 'Motivo de reapertura', '', { textarea: true, full: true, placeholder: 'Explica por qué vuelve a requerirse atención en este ticket (mínimo 10 caracteres)...' }) +
+      '<footer class="formfooter">' +
+        btn('Cancelar', 'back-detail', 'ghost') +
+        '<button type="submit" ' + (busy ? 'disabled' : '') + '>' + (busy ? 'Reabriendo…' : 'Confirmar reapertura →') + '</button>' +
+      '</footer>' +
+    '</form>' +
+  '</div>';
+
+  shell('Reabrir incidencia', t.codigo + ' · ' + t.titulo, content);
+}
+
+function attach() {
+  const t = selectedTicket;
+  if (!canAttach(t)) return denied();
+  screen = 'attach';
+  files = [];
+  errors = {};
+
+  const content = '<form class="card" id="attachform" novalidate style="max-width:700px">' +
+    errorBox() +
+    fileEditor() +
+    '<div style="margin-top:20px">' +
+      field('descripcion', 'Descripción del archivo', '', { placeholder: 'Ej. Fotografía del daño o diagnóstico PDF', optional: true }) +
+    '</div>' +
+    '<footer class="formfooter">' +
+      btn('Cancelar', 'back-detail', 'ghost') +
+      '<button type="submit" ' + (busy ? 'disabled' : '') + '>' + (busy ? 'Subiendo archivos a Supabase…' : 'Guardar evidencia →') + '</button>' +
+    '</footer>' +
+  '</form>';
+
+  shell('Adjuntar evidencias', t.codigo + ' · ' + t.titulo, content);
+}
+
+// -------------------------------------------------------------
+// PANTALLAS: ASIGNACIONES DEL COORDINADOR
+// -------------------------------------------------------------
+async function assignments() {
+  if (!is('coordinador') && !is('superAdmin')) return denied();
+  screen = 'assignments';
+  errors = {};
+  busy = true;
+
+  try {
+    const res = await api('/api/incidencias?pagina=1&tamanoPagina=50');
+    tickets = (res.elementos || []).filter(t => t.estado !== 'cerrada');
+  } catch (err) {
+    tickets = [];
+  } finally {
+    busy = false;
+  }
+
+  const unassigned = tickets.filter(t => !t.tecnicoAsignado);
+
+  const content = '<div class="notice">Hay <strong>' + unassigned.length + '</strong> incidencias pendientes de responsable técnico.</div>' +
+    '<div class="stack">' +
+      (tickets.length
+        ? tickets.map(t =>
+            '<article class="card ticket">' +
+              '<div class="row between">' +
+                '<div>' +
+                  '<h3>' + esc(t.titulo) + '</h3>' +
+                  '<p class="ticket-meta">' + esc(t.codigo) + ' · Área: ' + esc(t.ubicacion ? t.ubicacion.edificio + ' - ' + t.ubicacion.area : '') + ' · Responsable: ' + esc(t.tecnicoAsignado ? t.tecnicoAsignado.nombre : 'Sin asignar') + '</p>' +
+                '</div>' +
+                '<button data-action="assign-ticket" data-id="' + esc(t.id) + '">' +
+                  (t.tecnicoAsignado ? 'Reasignar' : 'Asignar técnico') +
+                '</button>' +
+              '</div>' +
+            '</article>'
+          ).join('')
+        : '<p class="muted">No hay tickets activos en este momento.</p>') +
+    '</div>';
+
+  shell('Administración y Asignaciones', 'Supervisa y distribuye la atención operativa entre los técnicos.', content);
+}
+
+// -------------------------------------------------------------
+// PANTALLAS: ANALÍTICA
+// -------------------------------------------------------------
+async function analytics() {
+  if (!user || is('reportante')) return denied();
+  screen = 'analytics';
+  busy = true;
+
+  try {
+    analyticsCache = await api('/api/analitica/resumen');
+  } catch (err) {
+    analyticsCache = null;
+    notice = 'Error al cargar analítica: ' + err.message;
+  } finally {
+    busy = false;
+  }
+
+  const data = analyticsCache || {
+    totalIncidencias: 0,
+    horasInvertidas: 0,
+    porEstado: [],
+    porCategoria: [],
+    porEdificio: [],
+    tagsFrecuentes: []
+  };
+
+  const maxCat = Math.max(1, ...data.porCategoria.map(x => x.total));
+  const maxEst = Math.max(1, ...data.porEstado.map(x => x.total));
+
+  const content = '<div class="metrics">' +
+    '<div class="card metric"><div class="eyebrow">Total de incidencias</div><div class="number">' + data.totalIncidencias + '</div><span class="help">En MongoDB Atlas</span></div>' +
+    '<div class="card metric"><div class="eyebrow">Horas totales</div><div class="number green">' + (data.horasInvertidas || 0).toFixed(1) + ' h</div><span class="help">Dedicadas por el equipo</span></div>' +
+    '<div class="card metric"><div class="eyebrow">Edificios con reportes</div><div class="number">' + data.porEdificio.length + '</div><span class="help">En el campus universitario</span></div>' +
+  '</div>' +
+  '<div class="split">' +
+    '<section class="card">' +
+      '<h2>Distribución por categoría</h2>' +
+      data.porCategoria.map(c => {
+        const pct = Math.round((c.total / maxCat) * 100);
+        return '<div class="analyticsrow"><span class="small">' + esc(CATS[c.nombre] || c.nombre) + '</span><div class="progress"><div style="width:' + pct + '%"></div></div><span class="small muted">' + c.total + '</span></div>';
+      }).join('') +
+      '<div class="divider"></div>' +
+      '<h2>Distribución por estado</h2>' +
+      data.porEstado.map(e => {
+        const pct = Math.round((e.total / maxEst) * 100);
+        return '<div class="analyticsrow"><span class="small">' + esc(STATUS[e.nombre] || e.nombre) + '</span><div class="progress"><div style="width:' + pct + '%"></div></div><span class="small muted">' + e.total + '</span></div>';
+      }).join('') +
+      '<div class="divider"></div>' +
+      '<h3>Etiquetas frecuentes</h3>' +
+      '<div class="tags" style="margin-top:16px">' +
+        data.tagsFrecuentes.map(t => tag(t.nombre + ' (' + t.total + ')')).join('') +
+      '</div>' +
+    '</section>' +
+    '<aside class="card">' +
+      '<h2>Por edificio</h2>' +
+      data.porEdificio.map(b =>
+        '<p class="small" style="margin-top:10px">' + esc(b.nombre) + ' · <strong>' + b.total + '</strong> incidencias</p>'
+      ).join('') +
+    '</aside>' +
+  '</div>';
+
+  shell(
+    is('directivo') ? 'Analítica del Campus' : is('tecnico') ? 'Mi actividad operativa' : 'Analítica Operativa',
+    'Indicadores consolidados calculados mediante pipelines de agregación en MongoDB.',
+    content
+  );
+}
+
+// -------------------------------------------------------------
+// PANTALLAS: USUARIOS (SUPERADMIN)
+// -------------------------------------------------------------
+async function usersScreen() {
+  if (!is('superAdmin')) return denied();
+  screen = 'users';
+  busy = true;
+
+  try {
+    usersCache = await api('/api/usuarios');
+  } catch (err) {
+    usersCache = [];
+    notice = 'Error al cargar usuarios: ' + err.message;
+  } finally {
+    busy = false;
+  }
+
+  const content = '<section class="card">' +
+    '<div class="cardtitle"><h2>Usuarios registrados</h2><span class="small muted">' + usersCache.length + ' usuarios</span></div>' +
+    '<div class="tablewrap">' +
+      '<table class="changes">' +
+        '<thead>' +
+          '<tr><th>NOMBRE</th><th>EMAIL</th><th>ROL</th><th>ÁREA/ESPECIALIDAD</th><th>ESTADO</th><th>ACCIONES</th></tr>' +
+        '</thead>' +
+        '<tbody>' +
+          usersCache.map(u =>
+            '<tr>' +
+              '<td><strong>' + esc(u.nombre) + '</strong></td>' +
+              '<td>' + esc(u.email) + '</td>' +
+              '<td>' + esc(ROLES_LABELS[u.rol] || u.rol) + '</td>' +
+              '<td>' + esc(u.especialidad || u.area || '—') + '</td>' +
+              '<td><span class="badge ' + (u.activo ? 'resolved' : 'attention') + '">' + (u.activo ? 'Activo' : 'Inactivo') + '</span></td>' +
+              '<td>' +
+                '<button type="button" class="ghost" data-action="toggle-user-active" data-id="' + esc(u.id) + '" data-activo="' + (!u.activo) + '">' +
+                  (u.activo ? 'Desactivar' : 'Activar') +
+                '</button>' +
+              '</td>' +
+            '</tr>'
+          ).join('') +
+        '</tbody>' +
+      '</table>' +
+    '</div>' +
+  '</section>';
+
+  shell('Gestión de Usuarios', 'Administración de accesos y cuentas del campus universitario.', content);
+}
+
+// -------------------------------------------------------------
+// PANTALLA: COMPLETADO (RESUMEN DE ACCIÓN)
+// -------------------------------------------------------------
+function completed() {
+  const t = selectedTicket;
+  if (!completion || !t) return dashboard();
+  screen = 'completed';
+
+  const b = completion.before;
+  const a = completion.after;
+
+  const rows = [
+    ['Estado', STATUS[b.estado] || b.estado, STATUS[a.estado] || a.estado],
+    ['Horas acumuladas', (b.horasInvertidas || 0) + ' h', (a.horasInvertidas || 0) + ' h'],
+    ['Responsable', b.tecnicoAsignado?.nombre || 'Sin asignar', a.tecnicoAsignado?.nombre || 'Sin asignar'],
+    ['Evidencias', b.evidenciasAdjuntas?.length || 0, a.evidenciasAdjuntas?.length || 0]
+  ];
+
+  const content = '<section class="card">' +
+    '<div class="success-icon">✓</div>' +
+    '<h2>' + esc(completion.title) + '</h2>' +
+    '<p class="small" style="margin:10px 0 24px">' + esc(t.titulo) + '</p>' +
+    '<div class="tablewrap">' +
+      '<table class="changes">' +
+        '<thead><tr><th>CAMBIO</th><th>ANTES</th><th>AHORA</th></tr></thead>' +
+        '<tbody>' +
+          rows.map(row => '<tr>' + row.map(v => '<td>' + esc(v) + '</td>').join('') + '</tr>').join('') +
+        '</tbody>' +
+      '</table>' +
+    '</div>' +
+    (completion.comment ? '<div class="notice" style="margin:24px 0"><strong>Comentario registrado en la bitácora</strong><p style="margin-top:7px">' + esc(completion.comment) + '</p></div>' : '') +
+    '<div class="row">' +
+      btn('Ver expediente actualizado', 'back-detail') +
+      btn('Volver a incidencias', 'list', 'secondary') +
+    '</div>' +
+  '</section>';
+
+  shell('Actualización completada', t.codigo + ' · Registro guardado con éxito.', content);
+}
+
+function denied() {
+  if (!user) {
+    errors = {};
+    return login();
+  }
+  notice = 'Esta operación no está permitida para tu rol actual (' + roleLabel() + ').';
+  dashboard();
+}
+
+function validFiles(selection) {
+  const invalid = selection.find(f => !['image/jpeg', 'image/png', 'application/pdf'].includes(f.type) || f.size > 5 * 1024 * 1024);
+  return invalid ? invalid.name + ': formato o tamaño no admitido (solo JPG, PNG o PDF de hasta 5 MB).' : null;
+}
+
+// -------------------------------------------------------------
+// MANEJADORES DE EVENTOS DEL DOM
+// -------------------------------------------------------------
+app.addEventListener('click', async e => {
+  const b = e.target.closest('[data-action]');
+  if (!b) return;
+  const a = b.dataset.action;
+
+  if (a === 'toggle-password') {
+    const input = $('password');
+    if (input) {
+      const show = input.type === 'password';
+      input.type = show ? 'text' : 'password';
+      b.textContent = show ? 'Ocultar' : 'Mostrar';
+      b.setAttribute('aria-label', show ? 'Ocultar contraseña' : 'Mostrar contraseña');
+      b.setAttribute('aria-pressed', String(show));
+      input.focus();
+    }
+    return;
+  }
+
+  if (a === 'home') return user ? dashboard() : home();
+  if (a === 'login') return user ? dashboard() : login();
+  if (a === 'logout') return logout();
+
+  if (!user) return login();
+
+  notice = '';
+  if (a === 'dashboard') return dashboard();
+  if (a === 'list') { page = 1; return list(); }
+  if (a === 'prev-page') { if (page > 1) { page--; return list(); } }
+  if (a === 'next-page') { page++; return list(); }
+  if (a === 'create') return beginCreate();
+  if (a === 'analytics') return analytics();
+  if (a === 'assignments') return assignments();
+  if (a === 'users') return usersScreen();
+  if (a === 'detail') return detail(b.dataset.id);
+  if (a === 'back-detail') return detail(selected);
+  if (a === 'history') return history();
+  if (a === 'work') return beginWork();
+  if (a === 'assign') return beginAssign();
+  if (a === 'assign-ticket') { selected = b.dataset.id; await detail(selected); return beginAssign(); }
+  if (a === 'close-ticket') return beginClose();
+  if (a === 'reopen-ticket') return beginReopen();
+  if (a === 'attach') return attach();
+
+  if (a === 'clear-filters') {
+    query = '';
+    filterTags = [];
+    filterEstado = '';
+    filterCategoria = '';
+    page = 1;
+    return list();
+  }
+
+  if (a === 'filter-tag') {
+    const t = b.dataset.tag;
+    filterTags = filterTags.includes(t) ? filterTags.filter(x => x !== t) : [t];
+    page = 1;
+    return list();
+  }
+
+  if (a === 'add-tag') {
+    if (screen === 'create' && $('createform')) readCreate($('createform'));
+    const input = $('taginput');
+    if (input) {
+      const clean = cleanTag(input.value);
+      if (clean && !draft.tags.includes(clean)) {
+        draft.tags.push(clean);
+        create();
+        $('taginput')?.focus();
+      }
+    }
+    return;
+  }
+
+  if (a === 'remove-tag') {
+    if (screen === 'create' && $('createform')) readCreate($('createform'));
+    const t = b.dataset.tag;
+    if (draft && draft.tags) {
+      draft.tags = draft.tags.filter(x => x !== t);
+      create();
+    }
+    return;
+  }
+
+  if (a === 'remove-file') {
+    files.splice(Number(b.dataset.index), 1);
+    if (screen === 'create') create();
+    else if (screen === 'work') work();
+    else if (screen === 'attach') attach();
+    return;
+  }
+
+  if (a === 'clear-file-error') {
+    delete errors.files;
+    if (screen === 'create') create();
+    else if (screen === 'work') work();
+    else if (screen === 'attach') attach();
+    return;
+  }
+
+  if (a === 'toggle-user-active') {
+    const uId = b.dataset.id;
+    const nuevoActivo = b.dataset.activo === 'true';
+    busy = true;
+    try {
+      await api('/api/usuarios/' + uId + '/estado', {
+        method: 'PATCH',
+        body: JSON.stringify({ activo: nuevoActivo })
+      });
+      notice = 'Estado de usuario actualizado correctamente.';
+      usersScreen();
+    } catch (err) {
+      alert('Error: ' + err.message);
+    } finally {
+      busy = false;
+    }
+  }
+});
+
+app.addEventListener('keydown', e => {
+  if (e.target.id === 'taginput' && e.key === 'Enter') {
+    e.preventDefault();
+    if (screen === 'create' && $('createform')) readCreate($('createform'));
+    const clean = cleanTag(e.target.value);
+    if (clean && !draft.tags.includes(clean)) {
+      draft.tags.push(clean);
+      create();
+      $('taginput')?.focus();
+    }
+  }
+});
+
+app.addEventListener('change', e => {
+  if (e.target.id === 'categoria') {
+    if ($('createform')) readCreate($('createform'));
+    draft.detalle = {};
+    errors = {};
+    return create();
+  }
+  if (e.target.id === 'files') {
+    const selected = [...e.target.files];
+    const err = validFiles(selected);
+    if (err) {
+      errors.files = err;
+    } else {
+      delete errors.files;
+      files.push(...selected);
+    }
+    if (screen === 'create') create();
+    else if (screen === 'work') work();
+    else if (screen === 'attach') attach();
+  }
+});
+
+// -------------------------------------------------------------
+// MANEJO DE ENVÍO DE FORMULARIOS (SUBMIT)
+// -------------------------------------------------------------
+app.addEventListener('submit', async e => {
+  e.preventDefault();
+  const f = e.target;
+
+  // LOGIN
+  if (f.id === 'loginform') {
+    if (busy) return;
+    const fd = new FormData(f);
+    const email = String(fd.get('email') || '').trim();
+    const password = String(fd.get('password') || '');
+    errors = {};
+
+    if (!email) errors.email = 'Escribe tu correo institucional.';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.email = 'Introduce un correo válido.';
+    if (!password) errors.password = 'Escribe tu contraseña.';
+
+    if (Object.keys(errors).length) {
+      login(email);
+      return focusError();
+    }
+
+    busy = true;
+    login(email);
+
+    try {
+      const res = await api('/api/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({ email, password })
+      });
+
+      sessionStorage.setItem('utm_token', res.token);
+      localStorage.setItem('utm_token', res.token);
+      user = res.usuario;
+      notice = '¡Bienvenido, ' + user.nombre + '!';
+      dashboard();
+    } catch (err) {
+      errors.password = err.message || 'Error al validar credenciales.';
+      login(email);
+      focusError();
+    } finally {
+      busy = false;
+    }
+    return;
+  }
+
+  // BUSCADOR EN LISTADO
+  if (f.id === 'searchform') {
+    query = String($('query')?.value || '');
+    filterEstado = String($('filterEstado')?.value || '');
+    filterCategoria = String($('filterCategoria')?.value || '');
+    page = 1;
+    return list();
+  }
+
+  // CREAR INCIDENCIA
+  if (f.id === 'createform') {
+    if (!canCreate()) return denied();
+    readCreate(f);
+    errors = validateCreate(draft);
+
+    if (Object.keys(errors).length) {
+      create();
+      return focusError();
+    }
+
+    busy = true;
+    create();
+
+    try {
+      const payload = {
+        titulo: draft.titulo.trim(),
+        descripcion: draft.descripcion.trim(),
+        categoria: draft.categoria,
+        prioridad: draft.prioridad,
+        ubicacion: {
+          edificio: draft.edificio.trim(),
+          area: draft.area.trim()
+        },
+        detalleEspecifico: draft.detalle,
+        tags: draft.tags
+      };
+
+      const creada = await api('/api/incidencias', {
+        method: 'POST',
+        body: JSON.stringify(payload)
+      });
+
+      // Subir evidencias si seleccionó alguna
+      if (files.length > 0) {
+        for (const file of files) {
+          const formPayload = new FormData();
+          formPayload.append('archivo', file);
+          formPayload.append('visibilidad', 'publica');
+          await apiUpload('/api/incidencias/' + creada.id + '/evidencias', formPayload);
+        }
+      }
+
+      draft = null;
+      files = [];
+      notice = 'Incidencia ' + creada.codigo + ' registrada correctamente en MongoDB Atlas.';
+      detail(creada.id);
+    } catch (err) {
+      errors.general = 'Error al registrar: ' + err.message;
+      create();
+      focusError();
+    } finally {
+      busy = false;
+    }
+    return;
+  }
+
+  // REGISTRAR SEGUIMIENTO TÉCNICO
+  if (f.id === 'workform') {
+    const t = selectedTicket;
+    if (!canWork(t)) return denied();
+
+    const fd = new FormData(f);
+    workDraft.estadoNuevo = String(fd.get('estadoNuevo') || '');
+    workDraft.horasTrabajadas = Number(fd.get('horasTrabajadas') || 0);
+    workDraft.comentario = String(fd.get('comentario') || '').trim();
+    workDraft.visibilidad = String(fd.get('visibilidad') || 'publica');
+
+    errors = {};
+    if (!workDraft.estadoNuevo) errors.estadoNuevo = 'Selecciona el nuevo estado.';
+    if (!workDraft.comentario || workDraft.comentario.length < 10) errors.comentario = 'El comentario debe tener al menos 10 caracteres.';
+    if (isNaN(workDraft.horasTrabajadas) || workDraft.horasTrabajadas < 0) errors.horasTrabajadas = 'Horas inválidas.';
+
+    if (Object.keys(errors).length) {
+      work();
+      return focusError();
+    }
+
+    busy = true;
+    work();
+
+    try {
+      const before = { ...t };
+      const res = await api('/api/incidencias/' + t.id + '/seguimientos', {
+        method: 'POST',
+        body: JSON.stringify(workDraft)
+      });
+
+      // Subir evidencias adicionales si hubo
+      if (files.length > 0) {
+        for (const file of files) {
+          const formPayload = new FormData();
+          formPayload.append('archivo', file);
+          formPayload.append('visibilidad', workDraft.visibilidad);
+          await apiUpload('/api/incidencias/' + t.id + '/evidencias', formPayload);
+        }
+      }
+
+      selectedTicket = res;
+      completion = {
+        title: 'El seguimiento técnico se registró correctamente',
+        comment: workDraft.comentario,
+        before,
+        after: res
+      };
+      files = [];
+      workDraft = null;
+      completed();
+    } catch (err) {
+      errors.general = err.message;
+      work();
+      focusError();
+    } finally {
+      busy = false;
+    }
+    return;
+  }
+
+  // ASIGNAR TÉCNICO
+  if (f.id === 'assignform') {
+    const t = selectedTicket;
+    if (!canAssign(t)) return denied();
+
+    const fd = new FormData(f);
+    const tecnicoId = String(fd.get('tecnicoId') || '').trim();
+    errors = {};
+    if (!tecnicoId) errors.tecnicoId = 'Selecciona un técnico responsable.';
+
+    if (Object.keys(errors).length) {
+      assign();
+      return focusError();
+    }
+
+    busy = true;
+    assign();
+
+    try {
+      const before = { ...t };
+      const res = await api('/api/incidencias/' + t.id + '/asignacion', {
+        method: 'PATCH',
+        body: JSON.stringify({ tecnicoId })
+      });
+
+      selectedTicket = res;
+      completion = {
+        title: 'Responsable técnico actualizado con éxito',
+        comment: 'Asignado a: ' + (res.tecnicoAsignado?.nombre || 'Técnico'),
+        before,
+        after: res
+      };
+      completed();
+    } catch (err) {
+      errors.general = err.message;
+      assign();
+      focusError();
+    } finally {
+      busy = false;
+    }
+    return;
+  }
+
+  // CERRAR INCIDENCIA
+  if (f.id === 'closeform') {
+    const t = selectedTicket;
+    if (!canClose(t)) return denied();
+
+    const fd = new FormData(f);
+    const comentario = String(fd.get('comentario') || '').trim();
+    errors = {};
+    if (!comentario || comentario.length < 10) errors.comentario = 'El comentario debe contener al menos 10 caracteres.';
+
+    if (Object.keys(errors).length) {
+      beginClose();
+      return focusError();
+    }
+
+    busy = true;
+    try {
+      const res = await api('/api/incidencias/' + t.id + '/cerrar', {
+        method: 'PATCH',
+        body: JSON.stringify({ comentario })
+      });
+      selectedTicket = res;
+      notice = 'La incidencia ' + res.codigo + ' ha sido cerrada.';
+      detail(t.id);
+    } catch (err) {
+      alert('Error: ' + err.message);
+    } finally {
+      busy = false;
+    }
+    return;
+  }
+
+  // REABRIR INCIDENCIA
+  if (f.id === 'reopenform') {
+    const t = selectedTicket;
+    if (!canReopen(t)) return denied();
+
+    const fd = new FormData(f);
+    const motivo = String(fd.get('motivo') || '').trim();
+    errors = {};
+    if (!motivo || motivo.length < 10) errors.motivo = 'El motivo debe tener al menos 10 caracteres.';
+
+    if (Object.keys(errors).length) {
+      beginReopen();
+      return focusError();
+    }
+
+    busy = true;
+    try {
+      const res = await api('/api/incidencias/' + t.id + '/reabrir', {
+        method: 'PATCH',
+        body: JSON.stringify({ motivo })
+      });
+      selectedTicket = res;
+      notice = 'La incidencia ' + res.codigo + ' ha sido reabierta.';
+      detail(t.id);
+    } catch (err) {
+      alert('Error: ' + err.message);
+    } finally {
+      busy = false;
+    }
+    return;
+  }
+
+  // ADJUNTAR EVIDENCIAS DIRECTAS
+  if (f.id === 'attachform') {
+    const t = selectedTicket;
+    if (!canAttach(t)) return denied();
+
+    if (!files.length) {
+      errors.files = 'Selecciona al menos un archivo válido.';
+      attach();
+      return focusError();
+    }
+
+    busy = true;
+    attach();
+
+    try {
+      const fd = new FormData(f);
+      const desc = String(fd.get('descripcion') || '').trim();
+
+      for (const file of files) {
+        const formPayload = new FormData();
+        formPayload.append('archivo', file);
+        if (desc) formPayload.append('descripcion', desc);
+        formPayload.append('visibilidad', 'publica');
+        await apiUpload('/api/incidencias/' + t.id + '/evidencias', formPayload);
+      }
+
+      files = [];
+      notice = 'Evidencias subidas exitosamente a Supabase Storage.';
+      detail(t.id);
+    } catch (err) {
+      errors.general = err.message;
+      attach();
+      focusError();
+    } finally {
+      busy = false;
+    }
+  }
+});
+
+// -------------------------------------------------------------
+// INICIALIZACIÓN DE LA SESIÓN
+// -------------------------------------------------------------
+async function initSession() {
+  const token = sessionStorage.getItem('utm_token') || localStorage.getItem('utm_token');
+  if (token) {
+    try {
+      user = await api('/api/auth/me');
+      dashboard();
+      return;
+    } catch {
+      sessionStorage.removeItem('utm_token');
+      localStorage.removeItem('utm_token');
+      user = null;
+    }
+  }
+  home();
+}
+
+// Arrancar aplicación
+initSession();
+
+</script></body></html>
