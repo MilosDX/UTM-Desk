@@ -1,9 +1,13 @@
 # Blueprint de Render para UTM Desk (API ASP.NET Core + frontend de wwwroot).
 #
-# Uso:
-#   1. Render Dashboard -> New -> Blueprint -> selecciona este repositorio.
-#   2. Render detecta este archivo y crea el servicio con el Dockerfile.
-#   3. Rellena las variables marcadas con "sync: false" (secretos) en el panel.
+# IMPORTANTE: un Blueprint SIEMPRE crea un servicio nuevo, y la URL de Render
+# depende del nombre. Para conservar el link actual (https://utm-desk.onrender.com)
+# hay que actualizar el servicio existente a mano (Settings -> Repository/Runtime)
+# en lugar de crear otro. Ver README, sección "Despliegue".
+#
+# Este archivo sirve como referencia de la configuración (Dockerfile, health check
+# y variables de entorno) y para recrear el servicio con el MISMO nombre si algún
+# día hay que rehacerlo (el servicio anterior debe renombrarse o eliminarse antes).
 #
 # La aplicación se sirve completa en https://<nombre>.onrender.com:
 #   /health          -> comprobación de estado
@@ -12,7 +16,7 @@
 
 services:
   - type: web
-    name: utm-desk-api
+    name: utm-desk
     runtime: docker
     plan: free
     region: oregon

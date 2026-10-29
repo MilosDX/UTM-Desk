@@ -82,14 +82,37 @@ La API y el frontend de `wwwroot` se despliegan juntos en un contenedor. El arch
 
 ### Render (API + frontend)
 
-1. En Render: **New → Blueprint** y conecta este repositorio.
-2. Render lee `render.yaml` y crea el servicio `utm-desk-api` con el `Dockerfile`.
-3. Completa en **Environment** las variables marcadas con `sync: false`:
+#### Opción A — conservar el link actual `https://utm-desk.onrender.com`
+
+Un Blueprint crea un servicio nuevo y la URL depende del nombre, así que para no
+cambiar el enlace hay que actualizar el servicio que ya existe:
+
+1. Render Dashboard → servicio `utm-desk` → **Settings**.
+2. En **Build & Deploy**, cambia el repositorio a `UraniumLogic/UTM-Desk` y la rama
+   a `main`.
+3. Cambia el runtime a **Docker** y usa `./Dockerfile` como Dockerfile Path.
+4. En **Environment** define las variables de entorno (las mismas de `render.yaml`):
    - `MongoDb__ConnectionString`
    - `Supabase__Url`
    - `Supabase__SecretKey`
-4. Guarda los cambios; Render redespliega automáticamente.
-5. Verifica `https://<tu-servicio>.onrender.com/health`.
+   - `Supabase__BucketName` = `utm-desk-evidencias`
+   - `Jwt__Key` (cadena aleatoria de al menos 32 caracteres)
+5. **Manual Deploy → Deploy latest commit**.
+6. Verifica `https://utm-desk.onrender.com/health`.
+
+La URL no cambia porque es el mismo servicio.
+
+#### Opción B — crear un servicio nuevo (cambia la URL)
+
+1. En Render: **New → Blueprint** y conecta este repositorio.
+2. Render lee `render.yaml` y crea el servicio con el `Dockerfile`.
+3. Completa las variables marcadas con `sync: false`.
+4. La nueva URL será `https://<nombre>.onrender.com`; si el frontend apunta a la
+   anterior, habrá que actualizarla.
+
+Para reutilizar exactamente `utm-desk.onrender.com` con un servicio nuevo, primero
+renombra o elimina el servicio viejo para liberar el nombre y crea el nuevo como
+`utm-desk`. Es más arriesgado que la Opción A.
 
 La aplicación queda completa en esa URL: `/` sirve el frontend, `/api/*` la API y
 `/health` la comprobación de estado.
