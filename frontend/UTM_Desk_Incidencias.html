@@ -200,18 +200,32 @@ function canCreate() {
   return !!user && (user.rol === 'reportante' || user.rol === 'superAdmin');
 }
 
+
+function coordinatorHasCategory(category) {
+  if (!user || user.rol !== 'coordinador' || !user.area) return false;
+  const raw = String(user.area).toLowerCase();
+  const cats = raw.split(/[,;|/\n\r]+/).map(s => s.trim()).filter(Boolean);
+  return cats.some(c => {
+    if (c.includes('infraestructura') && category === 'infraestructura') return true;
+    if ((c.includes('computo') || c.includes('cómputo') || c.includes('red')) && category === 'computo_redes') return true;
+    if ((c.includes('academ') || c.includes('académ')) && category === 'academico') return true;
+    return c === category;
+  });
+}
+
 function canWork(t) {
+
   if (!user || !t) return false;
   if (user.rol === 'superAdmin') return true;
   if (user.rol === 'tecnico' && t.tecnicoAsignado?.usuarioId === user.id) return true;
-  if (user.rol === 'coordinador' && t.categoria === user.area) return true;
+  if (user.rol === 'coordinador' && (t.categoria === user.area || coordinatorHasCategory(t.categoria))) return true;
   return false;
 }
 
 function canAssign(t) {
   if (!user || !t) return false;
   if (user.rol === 'superAdmin') return true;
-  if (user.rol === 'coordinador' && t.categoria === user.area) return true;
+  if (user.rol === 'coordinador' && (t.categoria === user.area || coordinatorHasCategory(t.categoria))) return true;
   return false;
 }
 
@@ -640,7 +654,7 @@ function create() {
   screen = 'create';
   if (!draft) draft = newDraft();
 
-  const catOptions = Object.entries(CATS).filter(([k]) => !is('coordinador') || k === user.area);
+  const catOptions = Object.entries(CATS).filter(([k]) => !is('coordinador') || k === user.area || coordinatorHasCategory(k));
   const specs = SPEC[draft.categoria] || [];
 
   const content = '<div class="split">' +
@@ -878,6 +892,7 @@ function assign() {
   let techs = techniciansCache;
   if (is('coordinador') && user.area) {
     const areaNorm = normalize(user.area);
+    const incidentCat = selectedTicket?.categoria || '';
     techs = techniciansCache.filter(tech => {
       const esp = normalize(tech.especialidad || tech.area || '');
       return !esp || esp.includes(areaNorm) || areaNorm.includes(esp);

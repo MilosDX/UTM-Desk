@@ -662,16 +662,48 @@ public sealed class IncidenciasService : IIncidenciasService
                 item => item.TecnicoAsignado!.UsuarioId,
                 usuario.Id),
             Roles.Coordinador when !string.IsNullOrWhiteSpace(usuario.Area) =>
-                filtros.Eq(
-                    item => item.Categoria,
-                    NormalizarAreaCoordinador(usuario.Area)),
+                ConstruirFiltroAreaCoordinador(usuario.Area),
             Roles.Directivo or Roles.SuperAdmin => filtros.Empty,
             _ => new BsonDocumentFilterDefinition<Incidencia>(
                 new BsonDocument("_id", ObjectId.Empty))
         };
     }
 
-    private static string NormalizarAreaCoordinador(string area)
+    private static FilterDefinition<Incidencia> ConstruirFiltroAreaCoordinador(string area)
+    {
+        var areas = ObtenerAreasCoordinador(area);
+        if (areas.Count == 1)
+        {
+            return Builders<Incidencia>.Filter.Eq(item => item.Categoria, areas[0]);
+        }
+        if (areas.Count > 1)
+        {
+            return Builders<Incidencia>.Filter.In(item => item.Categoria, areas);
+        }
+        return Builders<Incidencia>.Filter.Eq(
+            item => item.Categoria,
+            NormalizarUnaCategoria(area));
+    }
+
+    public static List<string> ObtenerAreasCoordinador(string area)
+    {
+        var resultado = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var separadores = new[] { ',', ';', '|', '/' };
+        var partes = area.Split(separadores, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+        foreach (var parte in partes)
+        {
+            var cat = NormalizarUnaCategoria(parte);
+            if (!string.IsNullOrWhiteSpace(cat))
+            {
+                resultado.Add(cat);
+            }
+        }
+
+        return [.. resultado];
+    }
+
+    private static string NormalizarUnaCategoria(string area)
     {
         var normalizada = area.Trim().ToLowerInvariant();
         if (normalizada.Contains("infraestructura"))
